@@ -15,6 +15,11 @@ namespace ConsoleApp
                 Console.Write("\nPress +, -, x or : to set your operator: ");
                 char operato = Console.ReadKey().KeyChar;
 
+                if (operato != '+' &
+                    operato != '-' &
+                    operato != 'x' &
+                    operato != ':') goto begin;
+
                 Console.Write("\nEnter a number: ");
                 int n1 = Convert.ToInt32(Console.ReadLine());
 
