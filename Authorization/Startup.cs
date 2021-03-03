@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,18 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
 
-            // Add database context of webapp
+            // CR:Add database context of webapp
             services.AddDbContext<DataContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("TmaDatabase")));
+                        options.UseSqlServer(Configuration.GetConnectionString("Atabase")));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Login";
+                    options.AccessDeniedPath = "/Home/Error";
+                });
         }
 
 
@@ -45,6 +54,7 @@ namespace WebApplication
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -606,7 +606,7 @@
 
                                     <div class="dropdown-divider"></div>
 
-                                    <a class="dropdown-item" href="/Login">
+                                    <a class="dropdown-item" href="/Logout">
                                         <span class="text-truncate pr-2" title="Sign out">Sign out</span>
                                     </a>
                                 </div>
@@ -631,7 +631,7 @@
                         <ul class="navbar-nav flex-grow-1">
                             <!-- Home -->
                             <li>
-                                <a class="navbar-nav-link nav-link" href="~/Home">
+                                <a class="navbar-nav-link nav-link" asp-controller="Home">
                                     <i class="tio-home-vs-1-outlined nav-icon"></i> Home
                                 </a>
                             </li>
@@ -645,22 +645,22 @@
                                 <!-- Dropdown -->
                                 <ul id="navLinkDashboardsDropdown" class="hs-sub-menu dropdown-menu dropdown-menu-lg hs-sub-menu-desktop-lg fadeOut animated" aria-labelledby="dashboardsDropdown" style="min-width: 16rem; display: none; animation-duration: 300ms;">
                                     <li>
-                                        <a class="dropdown-item" href="./index.html">
+                                        <a class="dropdown-item" href="./#">
                                             <span class="tio-circle nav-indicator-icon"></span> Development process
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="./dashboard-alternative.html">
+                                        <a class="dropdown-item" href="./#">
                                             <span class="tio-circle nav-indicator-icon"></span> Services - Partners
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="./dashboard-alternative.html">
+                                        <a class="dropdown-item" href="./#">
                                             <span class="tio-circle nav-indicator-icon"></span> Professional working environment
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="./dashboard-alternative.html">
+                                        <a class="dropdown-item" href="./#">
                                             <span class="tio-circle nav-indicator-icon"></span> Benefits and competitive income
                                         </a>
                                     </li>
@@ -670,14 +670,14 @@
                             <!-- End Why -->
                             <!-- QA -->
                             <li>
-                                <a class="navbar-nav-link nav-link" href="~/index.html">
+                                <a class="navbar-nav-link nav-link" asp-controller="Home" asp-action="Question">
                                     <i class="tio-help-outlined nav-icon"></i> Q & A
                                 </a>
                             </li>
                             <!-- End QA -->
                             <!-- Contacts -->
                             <li>
-                                <a class="navbar-nav-link nav-link" href="~/index.html">
+                                <a class="navbar-nav-link nav-link" asp-controller="Home" asp-action="Contact">
                                     <i class="tio-email-outlined nav-icon"></i> Contact
                                 </a>
                             </li>

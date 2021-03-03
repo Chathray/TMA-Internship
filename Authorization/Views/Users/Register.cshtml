@@ -1,4 +1,5 @@
-﻿@{
+﻿@model RegisterModel
+@{
     Layout = null;
     ViewBag.Title = "Đăng ký | Thực tập - TMA Solutions";
 }
@@ -30,30 +31,6 @@
             <a href="/">
                 <img class="w-100" src="~/logo.svg" alt="Image Description" style="min-width: 7rem; max-width: 7rem;">
             </a>
-
-            <!-- Select -->
-            <div id="languageSelect2" class="select2-custom select2-custom-right z-index-2">
-                <select class="js-select2-custom custom-select-sm" size="1" style="opacity: 0;"
-                        data-hs-select2-options='{
-                    "dropdownParent": "#languageSelect2",
-                    "minimumResultsForSearch": "Infinity",
-                    "placeholder": "Select language",
-                    "customClass": "custom-select custom-select-sm custom-select-borderless bg-transparent",
-                    "dropdownAutoWidth": true,
-                    "dropdownWidth": "12rem"
-                  }'>
-                    <option label="empty"></option>
-                    <option value="language1" data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/us.svg" alt="Image description" width="16"/><span>English (US)</span></span>'>English (US)</option>
-                    <option value="language2" selected data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/gb.svg" alt="Image description" width="16"/><span>English (UK)</span></span>'>English (UK)</option>
-                    <option value="language3" data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/de.svg" alt="Image description" width="16"/><span>Deutsch</span></span>'>Deutsch</option>
-                    <option value="language4" data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/dk.svg" alt="Image description" width="16"/><span>Dansk</span></span>'>Dansk</option>
-                    <option value="language5" data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/es.svg" alt="Image description" width="16"/><span>Español</span></span>'>Español</option>
-                    <option value="language6" data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/nl.svg" alt="Image description" width="16"/><span>Nederlands</span></span>'>Nederlands</option>
-                    <option value="language7" data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/it.svg" alt="Image description" width="16"/><span>Italiano</span></span>'>Italiano</option>
-                    <option value="language8" data-option-template='<span class="d-flex align-items-center"><img class="avatar avatar-xss avatar-circle mr-2" src="./assets/vendor/flag-icon-css/flags/1x1/cn.svg" alt="Image description" width="16"/><span>中文 (繁體)</span></span>'>中文 (繁體)</option>
-                </select>
-            </div>
-            <!-- End Select -->
         </div>
     </header>
     <!-- ========== END HEADER ========== -->
@@ -109,7 +86,7 @@
                 <div class="col-lg-6 d-flex justify-content-center align-items-center min-vh-lg-100">
                     <div class="w-100 pt-10 pt-lg-7 pb-7" style="max-width: 25rem;">
                         <!-- Form -->
-                        <form class="js-validate">
+                        <form class="js-validate" asp-action="Register">
                             <div class="text-center mb-5">
                                 <h1 class="display-4">Create your account</h1>
                                 <p>Already have an account? <a href="~/Login">Sign in here</a></p>
@@ -134,13 +111,13 @@
                             <div class="form-row">
                                 <div class="col-sm-6">
                                     <div class="js-form-message form-group">
-                                        <input type="text" class="form-control form-control-lg" name="fullName" id="fullNameSrEmail" placeholder="Mark" aria-label="Mark" required data-msg="Please enter your first name.">
+                                        <input asp-for="First_Name" type="text" class="form-control form-control-lg" placeholder="Mark" aria-label="Mark" required data-msg="Please enter your first name.">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="js-form-message form-group">
-                                        <input type="text" class="form-control form-control-lg" placeholder="Williams" aria-label="Williams" required data-msg="Please enter your last name.">
+                                        <input asp-for="Last_Name" type="text" class="form-control form-control-lg" placeholder="Williams" aria-label="Williams" required data-msg="Please enter your last name.">
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +126,7 @@
                             <div class="js-form-message form-group">
                                 <label class="input-label" for="signupSrEmail">Your email</label>
 
-                                <input type="email" class="form-control form-control-lg" name="email" id="signupSrEmail" placeholder="Markwilliams@example.com" aria-label="Markwilliams@example.com" required data-msg="Please enter a valid email address.">
+                                <input asp-for="Email" type="email" class="form-control form-control-lg" name="email" id="signupSrEmail" placeholder="Markwilliams@example.com" aria-label="Markwilliams@example.com" required data-msg="Please enter a valid email address.">
                             </div>
                             <!-- End Form Group -->
                             <!-- Form Group -->
@@ -157,7 +134,7 @@
                                 <label class="input-label" for="signupSrPassword">Password</label>
 
                                 <div class="input-group input-group-merge">
-                                    <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupSrPassword" placeholder="8+ characters required" aria-label="8+ characters required" required
+                                    <input asp-for="Password" type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupSrPassword" placeholder="8+ characters required" aria-label="8+ characters required" required
                                            data-msg="Your password is invalid. Please try again."
                                            data-hs-toggle-password-options='{
                              "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
@@ -178,7 +155,7 @@
                                 <label class="input-label" for="signupSrConfirmPassword">Confirm password</label>
 
                                 <div class="input-group input-group-merge">
-                                    <input type="password" class="js-toggle-password form-control form-control-lg" name="confirmPassword" id="signupSrConfirmPassword" placeholder="8+ characters required" aria-label="8+ characters required" required
+                                    <input asp-for="RePassword" type="password" class="js-toggle-password form-control form-control-lg" name="confirmPassword" id="signupSrConfirmPassword" placeholder="8+ characters required" aria-label="8+ characters required" required
                                            data-msg="Password does not match the confirm password."
                                            data-hs-toggle-password-options='{
                              "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
@@ -253,7 +230,7 @@
 
     <!-- IE Support -->
     <script>
-        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="~/polyfill.min.js"><\/script>');
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="~/js/polyfill.min.js"><\/script>');
     </script>
 </body>
 </html>
