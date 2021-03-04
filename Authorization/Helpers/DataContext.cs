@@ -13,7 +13,6 @@ namespace WebApplication
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("Users");
-
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using BC = BCrypt.Net.BCrypt;
 using System.Linq;
 using WebApplication.Models;
 
@@ -13,75 +14,50 @@ namespace WebApplication
             _context = context;
         }
 
-        public User Authenticate(string email, string password)
+        public User UserCheck(string eml, string pas)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(eml) || string.IsNullOrEmpty(pas))
                 return null;
 
-            var user = _context.Users.SingleOrDefault(x => x.Email == email);
+            //var user = _context.Users.SingleOrDefault(x => x.Email == email);
+            
+            var user = _context.Users
+                .FromSqlRaw($"EXECUTE dbo.UserCheck '{eml}'")
+                .ToList();
 
             // check if username exists
-            if (user == null)
+            if (user.Count < 1)
                 return null;
 
             // check if password is correct
-            if (!VerifyPasswordHash(password, user.Hashed_Code, user.Salt_Code))
+            if (!BC.Verify(pas, user[0].PasswordHash))
                 return null;
 
             // authentication successful
-            return user;
+            return user[0];
         }
 
-        public User Create(User user, string password)
+        public User UserCreate(User user, string pas)
         {
             // validation
-            if (string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(pas))
                 throw new AppException("Password is required");
 
             if (_context.Users.Any(x => x.Email == user.Email))
                 throw new AppException("Email \"" + user.Email + "\" is already taken");
 
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            user.PasswordHash = BC.HashPassword(pas);
 
-            user.Hashed_Code = passwordHash;
-            user.Salt_Code = passwordSalt;
+            //_context.Users.Add(user);
+            //_context.SaveChanges();
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
+            var rowsAffected = _context.Database
+                .ExecuteSqlRaw($"EXECUTE dbo.UserCreate " +
+                $"'{user.FirstName}', " +
+                $"'{user.LastName}', " +
+                $"'{user.Email}', " +
+                $"'{user.PasswordHash}'");
             return user;
-        }
-
-        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
-
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != storedHash[i]) return false;
-                }
-            }
-
-            return true;
         }
     }
 }

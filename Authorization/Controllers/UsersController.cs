@@ -41,7 +41,7 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _adapter.Authenticate(model.Email, model.Password);
+                var user = _adapter.UserCheck(model.Email, model.Password);
 
                 if (user == null)
                     return View();
@@ -49,7 +49,7 @@ namespace WebApplication.Controllers
                 var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Email, user.Email),
-                        new Claim("FullName", user.First_Name +" " + user.Last_Name),
+                        new Claim("FullName", user.FirstName +" " + user.LastName),
                     };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -74,7 +74,7 @@ namespace WebApplication.Controllers
             try
             {
                 // create user
-                _adapter.Create(user, model.Password);
+                _adapter.UserCreate(user, model.Password);
                 return Redirect("/Login");
             }
             catch (AppException)

@@ -8,11 +8,10 @@ namespace WebApplication.Models
 {
     public class User
     {
-        public string First_Name { get; set; }
-        public string Last_Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         [Key]
         public string Email { get; set; }
-        public byte[] Salt_Code { get; set; }
-        public byte[] Hashed_Code { get; set; }
+        public string PasswordHash { get; set; }
     }
 }

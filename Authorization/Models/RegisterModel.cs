@@ -5,10 +5,10 @@ namespace WebApplication.Models
     public class RegisterModel
     {
         [Required]
-        public string First_Name { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
-        public string Last_Name { get; set; }
+        public string LastName { get; set; }
 
         [Required]
         public string Email { get; set; }
