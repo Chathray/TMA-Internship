@@ -1,30 +1,30 @@
-﻿@{
+﻿@model QuestionModel
+@{
     ViewData["Title"] = " Q & A";
 }
 <h2 class="page-header-title pl-3 mb-5">@ViewData["Title"]</h2>
 
-<div class="accordion mx-2" id="accordionExample">
+<div class="accordion mx-3" id="accordionE">
+    @foreach (var X in Model.QA)
+    {
+        <div class="card" asp-route-id="heading_@X.Index">
+            <a class="pt-3 px-3 pb-2 card-btn btn-block" href="javascript:;" data-toggle="collapse" data-target="#question_@X.Index" aria-expanded="true" aria-controls="question_@X.Index">
+                <p class="h5">Hỏi: @X.InData</p>
+                <span class="card-btn-toggle">
+                    <span class="card-btn-toggle-default">
+                        <i class="tio-add"></i>
+                    </span>
+                    <span class="card-btn-toggle-active">
+                        <i class="tio-remove"></i>
+                    </span>
+                </span>
+            </a>
 
-    <div class="card p-2 mx-1">
-        <h5 class="" data-toggle="collapse" data-target="#question1149" aria-expanded="true"><p><strong> </strong><strong>Hỏi:</strong> Em là SV năm cuối (đang làm luận văn), chuyên ngành: Điện tử - Viễn thông, trường: ĐH Bách Khoa Tp. HCM. Em có 2 câu hỏi: TMA có tuyển thực tập sinh không? Nếu có, yêu cầu cụ thể (GPA, Tiếng Anh,...) như thế nào?</p><i class="fa fa-plus"></i> <i class="fa fa-minus"></i></h5>
-        <div id="question1149" class="collapse show" aria-expanded="false" style="">
-            <p><strong>Đáp</strong>: TMA thường xuyên tuyển thực tập sinh, sắp tới bên chị sẽ nhận hồ sơ thực tập để chuẩn bị cho đợt thực tập kế tiếp vào tháng 9. Hồ sơ ứng tuyển bao gồm:</p>
-            <ul>
-                <li>CV Tiếng Anh;</li>
-                <li>Bảng điểm hoặc bằng Tiếng Anh (nếu có);</li>
-                <li>Hình 3x4;</li>
-                <li>Giấy giới thiệu thực tập</li>
-            </ul>
+            <div id="question_@X.Index" class="collapse show" aria-labelledby="heading_@X.Index">
+                <div class="px-3">
+                    <p><strong>Đáp: </strong>@Html.Raw(X.OutData)</p>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="card p-2 mx-1">
-        <h5 class="" data-toggle="collapse" data-target="#question1150" aria-expanded="true"><p><strong> </strong><strong>Hỏi:</strong> Test thực tập đầu vào như thế nào chị?</p><i class="fa fa-plus"></i> <i class="fa fa-minus"></i></h5>
-        <div id="question1150" class="collapse show" style=""><p><strong>Đáp:</strong> Bài test đầu vào gồm: IQ ( 25’) và&nbsp;tiếng Anh (nếu em chưa có bằng)</p></div>
-    </div>
-
-    <div class="card p-2 mx-1">
-        <h5 class="" data-toggle="collapse" data-target="#question1151" aria-expanded="true"><p><strong> </strong><strong>Hỏi:</strong> Thời gian thực tập yêu cầu là bao nhiêu vậy Ad?</p><i class="fa fa-plus"></i> <i class="fa fa-minus"></i></h5>
-        <div id="question1151" class="collapse show" style=""><p><strong>Đáp:</strong> Thời gian thực tập kéo dài 3 tháng, 2.5 ngày/tuần em à.</p></div>
-    </div>
+    }
 </div>

@@ -12,11 +12,11 @@ using WebApplication.Models;
 namespace WebApplication.Controllers
 {
     [Route("/[action]")]
-    public class UsersController : Controller
+    public class UserController : Controller
     {
         private readonly DataAdapter _adapter;
         private readonly IMapper _mapper;
-        public UsersController(DataContext context, IMapper mapper)
+        public UserController(DataContext context, IMapper mapper)
         {
             _adapter = new DataAdapter(context);
             _mapper = mapper;

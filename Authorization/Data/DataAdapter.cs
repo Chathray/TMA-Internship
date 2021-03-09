@@ -2,6 +2,7 @@
 using BC = BCrypt.Net.BCrypt;
 using System.Linq;
 using WebApplication.Models;
+using System.Collections.Generic;
 
 namespace WebApplication
 {
@@ -20,7 +21,7 @@ namespace WebApplication
                 return null;
 
             //var user = _context.Users.SingleOrDefault(x => x.Email == email);
-            
+
             var user = _context.Users
                 .FromSqlRaw($"EXECUTE dbo.UserCheck '{eml}'")
                 .ToList();
@@ -35,6 +36,23 @@ namespace WebApplication
 
             // authentication successful
             return user[0];
+        }
+
+        public Intern CreateIntern(Intern model)
+        {
+            _context.Interns.Add(model);
+            _context.SaveChanges();
+            return model;
+        }
+
+        internal IList<Intern> GetInterns()
+        {
+            return _context.Interns.ToList();
+        }
+
+        public IList<Question> GetQuestions()
+        {
+            return _context.Questions.ToList();
         }
 
         public User UserCreate(User user, string pas)

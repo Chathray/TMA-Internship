@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Authentication
+@model InternModel
 @{
     ViewData["Title"] = "TMA Internship";
+    var typp = "";
 }
 
 <!-- Page Header -->
@@ -11,11 +13,234 @@
         </div>
 
         <div class="col-sm-auto">
-            <a asp-controller="Home" class="btn btn-sm btn-primary mr-4">
-                <i class="tio-user-add mr-1"></i> Add
-            </a>
+            <button type="button" class="btn btn-sm btn-primary mr-4" data-toggle="modal" data-target="#exampleModal">
+                Add intern
+            </button>
         </div>
     </div>
     <!-- End Row -->
 </div>
 <!-- End Page Header -->
+<!-- Table -->
+<div class="table-responsive datatable-custom">
+    <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+           data-hs-datatables-options='{
+                     "columnDefs": [{
+                        "targets": [0, 7],
+                        "orderable": false
+                      }],
+                     "order": [],
+                     "info": {
+                       "totalQty": "#datatableWithPaginationInfoTotalQty"
+                     },
+                     "search": "#datatableSearch",
+                     "entries": "#datatableEntries",
+                     "pageLength": 15,
+                     "isResponsive": false,
+                     "isShowPaging": false,
+                     "pagination": "datatablePagination"
+                   }'>
+        <thead class="thead-light">
+            <tr>
+                <th class="table-column-pr-0">
+                    <div class="custom-control custom-checkbox">
+                        <input id="datatableCheckAll" type="checkbox" class="custom-control-input">
+                        <label class="custom-control-label" for="datatableCheckAll"></label>
+                    </div>
+                </th>
+                <th class="table-column-pl-0">Name</th>
+                <th>Position</th>
+                <th>Phone</th>
+                <th>Type</th>
+                <th>Organization</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var X in Model.Members)
+            {
+            <tr>
+                <td class="table-column-pr-0">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="usersDataCheck1">
+                        <label class="custom-control-label" for="usersDataCheck1"></label>
+                    </div>
+                </td>
+                <td class="table-column-pl-0">
+                    <a class="d-flex align-items-center" href="#">
+                        <div class="avatar avatar-circle">
+                            <img class="avatar-img" src="../img/img1.jpg" alt="Image Description">
+                        </div>
+                        <div class="ml-3">
+                            <span class="d-block h5 text-hover-primary mb-0">@X.FirstName @X.LastName <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></span>
+                            <span class="d-block font-size-sm text-body">@X.Email</span>
+                        </div>
+                    </a>
+                </td>
+                <td>
+                    <span class="d-block h5 mb-0">@X.Department</span>
+                    <span class="d-block font-size-sm">TIP</span>
+                </td>
+                <td>
+                    <span class="legend-indicator"></span>@X.Phone
+                </td>
+                <td>
+                    @switch (X.Type)
+                    {
+                        case 'F':
+                            typp = "Full time";
+                            break;
+                        case 'P':
+                            typp = "Part time";
+                            break;
+                        default:
+                            typp = "Unknown";
+                            break;
+                    }
+                    @typp
+                </td>
+               <td>
+                   <span class="badge badge-soft-info">
+                       <span class="bg-info"></span>@X.Organization
+                   </span>
+                </td>
+
+                <td>
+                    <div id="editUserPopover" data-toggle="popover-dark" data-placement="left" title="<div class='d-flex align-items-center'>Edit user <a href='#!' class='close close-light ml-auto'><i id='closeEditUserPopover' class='tio-clear'></i></a></div>" data-content="Check out this Edit user modal example." data-html="true">
+                        <a class="btn btn-sm btn-white" href="javascript:;" data-toggle="modal" data-target="#editUserModal">
+                            <i class="tio-edit"></i> Edit
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- End Table -->
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="js-validate" asp-controller="Home" asp-action="Index">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create a new intern</h5>
+                    <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                        <i class="tio-clear tio-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body">
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">Avatar</label>
+
+                        <div class="col-sm-9">
+                            <div class="d-flex align-items-center">
+                                <!-- Avatar -->
+                                <label class="avatar avatar-xl avatar-circle avatar-uploader mr-5" for="avatarUploader">
+                                    <img id="avatarImg" class="avatar-img" src="./img/img1.jpg" alt="Image Description">
+
+                                    <input asp-for="Avatar" type="file" class="js-file-attach avatar-uploader-input" id="avatarUploader" data-hs-file-attach-options="{
+                                      &quot;textTarget&quot;: &quot;#avatarImg&quot;,
+                                      &quot;mode&quot;: &quot;image&quot;,
+                                      &quot;targetAttr&quot;: &quot;src&quot;,
+                                      &quot;resetTarget&quot;: &quot;.js-file-attach-reset-img&quot;,
+                                      &quot;resetImg&quot;: &quot;./img/img1.jpg&quot;,
+                                      &quot;allowTypes&quot;: [&quot;.png&quot;, &quot;.jpeg&quot;, &quot;.jpg&quot;]
+                                   }">
+
+                                    <span class="avatar-uploader-trigger">
+                                        <i class="tio-edit avatar-uploader-icon shadow-soft"></i>
+                                    </span>
+                                </label>
+                                <!-- End Avatar -->
+
+                                <button type="button" class="js-file-attach-reset-img btn btn-white">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Full name <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Displayed on public forums, such as Front."></i></label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm-down-break">
+                                <input asp-for="FirstName" type="text" required class="form-control" name="firstName" id="firstNameLabel" placeholder="Clarice" aria-label="Clarice">
+                                <input asp-for="LastName" type="text" required class="form-control" name="lastName" id="lastNameLabel" placeholder="Boone" aria-label="Boone">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="emailLabel" class="col-sm-3 col-form-label input-label">Email</label>
+
+                        <div class="col-sm-9">
+                            <input asp-for="Email" type="email" required class="form-control" name="email" id="emailLabel" placeholder="clarice@example.com" aria-label="clarice@example.com">
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <div class="row form-group">
+                        <label for="emailLabel" class="col-sm-3 col-form-label input-label">Phone</label>
+                        <div class="col-sm-9">
+                            <input asp-for="Phone" type="text" required class="js-masked-input form-control" id="PhoneNumberLabel" placeholder="+xx xxx.xxx.xxx" data-hs-mask-options="{
+                        &quot;template&quot;: &quot;+00 000.000.000&quot;
+                      }" maxlength="16" />
+                        </div>
+                    </div>
+
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="organizationLabel" class="col-sm-3 col-form-label input-label">Organization</label>
+
+                        <div class="col-sm-9">
+                            <input asp-for="Organization" type="text" required class="form-control" name="organization" id="organizationLabel" placeholder="TMA Solutions" aria-label="Htmlstream">
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="departmentLabel" class="col-sm-3 col-form-label input-label">Department</label>
+
+                        <div class="col-sm-9">
+                            <input asp-for="Department" type="text" required class="form-control" name="department" id="departmentLabel" placeholder="TIP#Sharp" aria-label="Human resources">
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label input-label">Intern type</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm-down-break">
+                                <!-- Select2 -->
+                                <select asp-for=Type class="js-select2-custom custom-select" size="1" style="opacity: 0;"
+                                        data-hs-select2-options='{"minimumResultsForSearch": "Infinity",
+                                                                  "placeholder": "Select member"}'>
+                                    <option label="empty"></option>
+                                    <option value="F">Full time</option>
+                                    <option value="P">Part time</option>
+                                </select>
+                                <!-- End Select2 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                </div>
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <!-- End Footer -->
+            </div>
+        </form>
+    </div>
+</div>
