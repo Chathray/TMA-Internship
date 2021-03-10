@@ -16,73 +16,61 @@ namespace WebApplication.Controllers
     {
         private readonly DataAdapter _adapter;
         private readonly IMapper _mapper;
-        
+
         public UserController(DataContext context, IMapper mapper)
         {
             _adapter = new DataAdapter(context);
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Authentication()
         {
-            if (User.Identity.IsAuthenticated) 
-                return Redirect("/");
-
+            await Logout();
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Register()
+        [HttpPost]
+        public async Task<IActionResult> Login(AuthenticationModel model)
         {
-            return View();
-        }
+            var user = _adapter.UserCheck(model.LoginMail, model.LoginPass);
 
-        public async Task<IActionResult> Login(LoginModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = _adapter.UserCheck(model.Email, model.Password);
+            if (user == null)
+                return View("Authentication", model);
 
-                if (user == null)
-                    return View();
-
-                var claims = new List<Claim>
+            var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim("FullName", user.FirstName +" " + user.LastName),
                         new Claim("Status", user.Status)
                     };
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    new AuthenticationProperties
-                    {
-                        IsPersistent = true,
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(10)
-                    });
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.UtcNow.AddMinutes(10)
+                });
 
-                return Redirect("/");
-            }
-            return View();
+            return Redirect("/");
         }
 
-        public IActionResult Register(RegisterModel model)
+        [HttpPost]
+        public IActionResult Register(AuthenticationModel model)
         {
             User user = _mapper.Map<User>(model);
             try
             {
                 // create user
                 _adapter.UserCreate(user, model.Password);
-                return Redirect("/Login");
             }
             catch (AppException)
-            {
-                return View();
-            }
+            { }
+
+            return RedirectToAction("Authentication");
         }
 
         public async Task<IActionResult> Logout()

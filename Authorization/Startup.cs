@@ -25,12 +25,12 @@ namespace WebApplication
 
             // CR:Add database context of webapp
             services.AddDbContext<DataContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("Atabase")));
+                        options.UseSqlServer(Configuration.GetConnectionString("HOMEDB")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Login";
+                    options.LoginPath = "/Authentication";
                     options.AccessDeniedPath = "/Home/Error";
                 });
         }

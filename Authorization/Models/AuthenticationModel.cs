@@ -2,8 +2,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication.Models
 {
-    public class RegisterModel
+    public class AuthenticationModel
     {
+        [Required]
+        public string LoginMail { get; set; }
+
+        [Required]
+        public string LoginPass { get; set; }
+
+        /*-----------------------------------*/
+
+        [Required]
+        public string ResetEmail { get; set; }
+
+        /*-----------------------------------*/
+
         [Required]
         public string FirstName { get; set; }
 
@@ -15,8 +28,5 @@ namespace WebApplication.Models
 
         [Required]
         public string Password { get; set; }
-
-        [Required]
-        public string RePassword { get; set; }
     }
 }
