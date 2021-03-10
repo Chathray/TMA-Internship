@@ -34,7 +34,7 @@ namespace WebApplication
 
                 entity.Property(e => e.Status)
                     .IsRequired()
-                    .HasDefaultValue('0');
+                    .HasDefaultValue("success");
 
                 entity.Property(e => e.Role)
                     .IsRequired()
@@ -51,8 +51,6 @@ namespace WebApplication
 
             modelBuilder.Entity<Intern>(entity =>
             {
-                entity.HasKey(e => e.Email);
-
                 entity.Property(e => e.Email)
                     .HasMaxLength(100);
 
@@ -77,11 +75,11 @@ namespace WebApplication
 
                 entity.Property(e => e.Organization)
                     .IsRequired()
-                    .HasDefaultValue("0");
+                    .HasDefaultValue("Quy Nhon University");
 
                 entity.Property(e => e.Department)
                     .IsRequired()
-                    .HasDefaultValue("0");
+                    .HasDefaultValue("TIP C#");
             });
 
             modelBuilder.Entity<Question>(entity =>

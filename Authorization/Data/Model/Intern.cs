@@ -5,6 +5,9 @@ namespace WebApplication
 {
     public class Intern
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
         public string Avatar { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }

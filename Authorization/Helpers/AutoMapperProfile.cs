@@ -8,7 +8,7 @@ namespace WebApplication
         public AutoMapperProfile()
         {
             CreateMap<RegisterModel, User>();
-            CreateMap<InternModel, Intern>();
+            CreateMap<IndexModel, Intern>();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace WebApplication
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PasswordHash { get; set; }
-        public char Status { get; set; }
+        public string Status { get; set; }
         public char Role { get; set; }
         public string Avatar { get; set; }
         public string Phone { get; set; }

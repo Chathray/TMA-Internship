@@ -3,13 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication.Models
 {
-    public class InternModel
+    public class IndexModel
     {
-        public IList<Intern> Members { get; set; }
+        public IList<Intern> Interns { get; set; }
 
-        public InternModel(IList<Intern> data)
+        public IndexModel() { }
+        public IndexModel(IList<Intern> data)
         {
-            Members = data;
+            Interns = data;
         }
 
         #region Property

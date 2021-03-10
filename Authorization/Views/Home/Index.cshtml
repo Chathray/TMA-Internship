@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Authentication
-@model InternModel
+@model IndexModel
 @{
     ViewData["Title"] = "TMA Internship";
     var typp = "";
@@ -9,7 +9,7 @@
 <div class="page-header">
     <div class="row align-items-end">
         <div class="col-sm mb-2 mb-sm-0">
-            <h2 class="page-header-title pl-3">@ViewData["Title"]</h2>
+            <h3 class="page-header-title pl-3">@ViewData["Title"]</h3>
         </div>
 
         <div class="col-sm-auto">
@@ -36,7 +36,7 @@
                      "search": "#datatableSearch",
                      "entries": "#datatableEntries",
                      "pageLength": 15,
-                     "isResponsive": false,
+                     "isResponsive": true,
                      "isShowPaging": false,
                      "pagination": "datatablePagination"
                    }'>
@@ -58,19 +58,19 @@
         </thead>
 
         <tbody>
-            @foreach (var X in Model.Members)
+            @foreach (var X in Model.Interns)
             {
             <tr>
                 <td class="table-column-pr-0">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="usersDataCheck1">
-                        <label class="custom-control-label" for="usersDataCheck1"></label>
+                        <input type="checkbox" class="custom-control-input" id="check-@X.ID">
+                        <label class="custom-control-label" for="check-@X.ID"></label>
                     </div>
                 </td>
                 <td class="table-column-pl-0">
                     <a class="d-flex align-items-center" href="#">
                         <div class="avatar avatar-circle">
-                            <img class="avatar-img" src="../img/img1.jpg" alt="Image Description">
+                            <img class="avatar-img" src="~/img/img1.jpg" alt="Image Description">
                         </div>
                         <div class="ml-3">
                             <span class="d-block h5 text-hover-primary mb-0">@X.FirstName @X.LastName <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></span>
@@ -83,7 +83,7 @@
                     <span class="d-block font-size-sm">TIP</span>
                 </td>
                 <td>
-                    <span class="legend-indicator"></span>@X.Phone
+                    <span></span>@X.Phone
                 </td>
                 <td>
                     @switch (X.Type)
@@ -107,9 +107,9 @@
                 </td>
 
                 <td>
-                    <div id="editUserPopover" data-toggle="popover-dark" data-placement="left" title="<div class='d-flex align-items-center'>Edit user <a href='#!' class='close close-light ml-auto'><i id='closeEditUserPopover' class='tio-clear'></i></a></div>" data-content="Check out this Edit user modal example." data-html="true">
-                        <a class="btn btn-sm btn-white" href="javascript:;" data-toggle="modal" data-target="#editUserModal">
-                            <i class="tio-edit"></i> Edit
+                    <div id="removeInternPopover" data-toggle="popover-dark" data-placement="left" title="Trainees will leave TMA" data-content="Check out this.">
+                        <a class="btn btn-sm btn-white" href="javascript:;" onclick="InternLeave(@X.ID, this)">
+                            <i class="tio-remove-circle-outlined"></i> Leave
                         </a>
                     </div>
                 </td>
@@ -143,16 +143,16 @@
                             <div class="d-flex align-items-center">
                                 <!-- Avatar -->
                                 <label class="avatar avatar-xl avatar-circle avatar-uploader mr-5" for="avatarUploader">
-                                    <img id="avatarImg" class="avatar-img" src="./img/img1.jpg" alt="Image Description">
+                                    <img id="avatarImg" class="avatar-img" src="../img/img1.jpg" alt="Image Description">
 
-                                    <input asp-for="Avatar" type="file" class="js-file-attach avatar-uploader-input" id="avatarUploader" data-hs-file-attach-options="{
-                                      &quot;textTarget&quot;: &quot;#avatarImg&quot;,
-                                      &quot;mode&quot;: &quot;image&quot;,
-                                      &quot;targetAttr&quot;: &quot;src&quot;,
-                                      &quot;resetTarget&quot;: &quot;.js-file-attach-reset-img&quot;,
-                                      &quot;resetImg&quot;: &quot;./img/img1.jpg&quot;,
-                                      &quot;allowTypes&quot;: [&quot;.png&quot;, &quot;.jpeg&quot;, &quot;.jpg&quot;]
-                                   }">
+                                    <input asp-for="Avatar" type="file" class="js-file-attach avatar-uploader-input" id="avatarUploader" data-hs-file-attach-options='{
+                                        "textTarget": "#avatarImg",
+                                        "mode": "image",
+                                        "targetAttr": "src",
+                                        "resetTarget": ".js-file-attach-reset-img",
+                                        "resetImg": "../img/img1.jpg",
+                                        "allowTypes": [".png", ".jpeg", ".jpg"]
+                                     }'>
 
                                     <span class="avatar-uploader-trigger">
                                         <i class="tio-edit avatar-uploader-icon shadow-soft"></i>
@@ -222,7 +222,7 @@
                                 <!-- Select2 -->
                                 <select asp-for=Type class="js-select2-custom custom-select" size="1" style="opacity: 0;"
                                         data-hs-select2-options='{"minimumResultsForSearch": "Infinity",
-                                                                  "placeholder": "Select member"}'>
+                                                                  "placeholder": "Select one"}'>
                                     <option label="empty"></option>
                                     <option value="F">Full time</option>
                                     <option value="P">Part time</option>

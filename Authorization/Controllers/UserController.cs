@@ -16,6 +16,7 @@ namespace WebApplication.Controllers
     {
         private readonly DataAdapter _adapter;
         private readonly IMapper _mapper;
+        
         public UserController(DataContext context, IMapper mapper)
         {
             _adapter = new DataAdapter(context);
@@ -50,6 +51,7 @@ namespace WebApplication.Controllers
                     {
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim("FullName", user.FirstName +" " + user.LastName),
+                        new Claim("Status", user.Status)
                     };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

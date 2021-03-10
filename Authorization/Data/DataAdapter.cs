@@ -38,11 +38,19 @@ namespace WebApplication
             return user[0];
         }
 
-        public Intern CreateIntern(Intern model)
+        internal Intern CreateIntern(Intern model)
         {
             _context.Interns.Add(model);
             _context.SaveChanges();
             return model;
+        }
+
+        internal string InternLeave(int id)
+        {
+            var target = _context.Interns.FirstOrDefault(x => x.ID == id);
+            _context.Interns.Remove(target);
+            _context.SaveChanges();
+            return target.Email;
         }
 
         internal IList<Intern> GetInterns()

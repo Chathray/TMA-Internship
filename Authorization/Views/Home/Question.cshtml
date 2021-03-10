@@ -1,15 +1,15 @@
-﻿@model QuestionModel
+﻿@model IList<Question>
 @{
     ViewData["Title"] = " Q & A";
 }
 <h2 class="page-header-title pl-3 mb-5">@ViewData["Title"]</h2>
 
 <div class="accordion mx-3" id="accordionE">
-    @foreach (var X in Model.QA)
+    @foreach (var item in Model)
     {
-        <div class="card" asp-route-id="heading_@X.Index">
-            <a class="pt-3 px-3 pb-2 card-btn btn-block" href="javascript:;" data-toggle="collapse" data-target="#question_@X.Index" aria-expanded="true" aria-controls="question_@X.Index">
-                <p class="h5">Hỏi: @X.InData</p>
+        <div class="card" id="heading_@item.Index">
+            <a class="pt-3 px-3 pb-2 card-btn btn-block" href="javascript:;" data-toggle="collapse" data-target="#question_@item.Index" aria-expanded="true" aria-controls="question_@item.Index">
+                <p class="h5">Hỏi: @Html.DisplayFor(o => item.InData)</p>
                 <span class="card-btn-toggle">
                     <span class="card-btn-toggle-default">
                         <i class="tio-add"></i>
@@ -20,9 +20,9 @@
                 </span>
             </a>
 
-            <div id="question_@X.Index" class="collapse show" aria-labelledby="heading_@X.Index">
+            <div id="question_@item.Index" class="collapse show" aria-labelledby="heading_@item.Index">
                 <div class="px-3">
-                    <p><strong>Đáp: </strong>@Html.Raw(X.OutData)</p>
+                    <p><strong>Đáp: </strong>@Html.Raw(item.OutData)</p>
                 </div>
             </div>
         </div>
