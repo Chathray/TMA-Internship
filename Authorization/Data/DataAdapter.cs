@@ -60,7 +60,10 @@ namespace WebApplication
 
         public IList<Question> GetQuestions()
         {
-            return _context.Questions.ToList();
+            return _context.Questions
+                .OrderBy(y => y.Group)
+                .ThenBy(n => n.Index)
+                .ToList();
         }
 
         public User UserCreate(User user, string pas)
@@ -84,6 +87,15 @@ namespace WebApplication
                 $"'{user.Email}', " +
                 $"'{user.PasswordHash}'");
             return user;
+        }
+
+        internal IList<EventType> GetEventTypes()
+        {
+            return _context.EventTypes.ToList();
+        }
+        internal IList<Event> GetEvents()
+        {
+            return _context.Events.ToList();
         }
     }
 }

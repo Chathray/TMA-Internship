@@ -30,6 +30,9 @@ namespace WebApplication.Models
         public string Phone { get; set; }
 
         [Required]
+        public string Duration { get; set; }
+
+        [Required]
         public char Type { get; set; }
 
         [Required]

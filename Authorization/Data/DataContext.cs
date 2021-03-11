@@ -61,6 +61,10 @@ namespace WebApplication
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.Duration)
+                    .IsRequired()
+                    .HasColumnType("varchar(23)");
+
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -102,6 +106,7 @@ namespace WebApplication
                    .HasColumnType("nvarchar(MAX)");
             });
 
+
             modelBuilder.Entity<User>().HasData(new User[]
             {
                 new User
@@ -113,45 +118,90 @@ namespace WebApplication
                 }
             });
 
+            modelBuilder.Entity<EventType>().HasData(new EventType[]
+            {
+                new EventType
+                {
+                    Name = "Personal",
+                    Color = "primary",
+                    ClassName = "hs-team"
+                }, new EventType
+                {
+                    Name = "Reminders",
+                    Color = "danger",
+                    ClassName = "reminders"
+
+                }, new EventType
+                {
+                    Name = "Tasks",
+                    Color = "dark",
+                    ClassName = "tasks"
+
+                },new EventType
+                {
+                    Name = "Holidays",
+                    Color = "warning",
+                    ClassName = "holidays"
+                },
+            });
+
             modelBuilder.Entity<Question>().HasData(new Question[]
             {
                 new Question
                 {
                     Index= 1,
-                    Group = "tuyển dụng",
+                    Group = "Recruit",
                     InData = "Cho em hỏi TMA phỏng vấn tiếng Anh hay tiếng Việt?",
                     OutData = "Bên mình sẽ phỏng vấn cả tiếng Anh và tiếng Việt nha bạn."
                 },
                 new Question
                 {
                     Index= 2,
-                    Group = "tuyển dụng",
+                    Group = "Recruit",
                     InData = "Anh/chị cho em hỏi nếu test tiếng Anh ở công ty thì đề thi như thế nào ạ? Bao lâu sẽ có kết quả?",
                     OutData = "Chào bạn, đề thi sẽ theo chuẩn đề TOEIC, thông thường kết quả sẽ được thông báo trong vòng 1 tuần, tùy thuộc vào mỗi dự án."
                 },
                 new Question
                 {
                     Index= 3,
-                    Group = "thực tập",
+                    Group = "Recruit",
                     InData = "Em là SV năm cuối (đang làm luận văn), chuyên ngành: Điện tử - Viễn thông, trường: ĐH Bách Khoa Tp. HCM. Em có 2 câu hỏi: TMA có tuyển thực tập sinh không? Nếu có, yêu cầu cụ thể (GPA, Tiếng Anh,...) như thế nào?",
                     OutData = "TMA thường xuyên tuyển thực tập sinh, sắp tới bên chị sẽ nhận hồ sơ thực tập để chuẩn bị cho đợt thực tập kế tiếp vào tháng 9. Hồ sơ ứng tuyển bao gồm:<ul class='mt-3'><li>CV Tiếng Anh;</li><li> Bảng điểm hoặc bằng Tiếng Anh(nếu có);</li><li> Hình 3x4;</li><li> Giấy giới thiệu thực tập</li></ul> "
                 },
                 new Question
                 {
                     Index= 4,
-                    Group = "thực tập",
+                    Group = "Internship",
+                    InData = "Ngoại ngữ có yêu cầu cao không Ad?",
+                    OutData = "Nếu em đã có các bằng như (TOEIC, TOEFL, IELTS) tương đương TOEIC 450 trở lên thì không phải làm bài test em nhé."
+                },
+                new Question
+                {
+                    Index= 5,
+                    Group = "Internship",
                     InData = "Test thực tập đầu vào như thế nào chị?",
                     OutData = "Bài test đầu vào gồm: IQ (25’) và tiếng Anh (nếu em chưa có bằng)"
+                },
+                new Question
+                {
+                    Index= 6,
+                    Group = "Internship",
+                    InData = "Thời gian thực tập yêu cầu là bao nhiêu vậy Ad?",
+                    OutData = "Thời gian thực tập kéo dài 3 tháng, 2.5 ngày/tuần em à."
                 },
             });
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Question>().ToTable("Questions");
             modelBuilder.Entity<Intern>().ToTable("Interns");
+            modelBuilder.Entity<Event>().ToTable("Events");
+            modelBuilder.Entity<EventType>().ToTable("EventTypes");
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Intern> Interns { get; set; }
+        public DbSet<EventType> EventTypes { get; set; }
+        public DbSet<Event> Events { get; set; }
     }
 }

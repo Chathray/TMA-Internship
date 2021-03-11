@@ -71,12 +71,24 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        [AcceptVerbs("GET", "POST")]
+        [AcceptVerbs("GET")]
         public IActionResult Question()
         {
             var model = _adapter.GetQuestions();
             return View(model);
         }
+
+        public IActionResult Calendar()
+        {
+            var e = _adapter.GetEvents();
+            var et = _adapter.GetEventTypes();
+            var model = new CalendarModel(et, e);
+            model.Creator = User.Claims.ElementAt(1).Value;
+
+            return View(model);
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

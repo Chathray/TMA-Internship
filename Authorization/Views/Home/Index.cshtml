@@ -6,14 +6,20 @@
 }
 
 <!-- Page Header -->
-<div class="page-header">
+<div class="pl-3">
     <div class="row align-items-end">
         <div class="col-sm mb-2 mb-sm-0">
-            <h3 class="page-header-title pl-3">@ViewData["Title"]</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Index</li>
+                </ol>
+            </nav>
+            <h3 class="page-header-title mb-5">@ViewData["Title"]</h3>
         </div>
 
         <div class="col-sm-auto">
-            <button type="button" class="btn btn-sm btn-primary mr-4" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-sm btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
                 Add intern
             </button>
         </div>
@@ -51,6 +57,7 @@
                 <th class="table-column-pl-0">Name</th>
                 <th>Position</th>
                 <th>Phone</th>
+                <th>Duration</th>
                 <th>Type</th>
                 <th>Organization</th>
                 <th></th>
@@ -60,60 +67,63 @@
         <tbody>
             @foreach (var X in Model.Interns)
             {
-            <tr>
-                <td class="table-column-pr-0">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="check-@X.ID">
-                        <label class="custom-control-label" for="check-@X.ID"></label>
-                    </div>
-                </td>
-                <td class="table-column-pl-0">
-                    <a class="d-flex align-items-center" href="#">
-                        <div class="avatar avatar-circle">
-                            <img class="avatar-img" src="~/img/img1.jpg" alt="Image Description">
+                <tr>
+                    <td class="table-column-pr-0">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="check-@X.ID">
+                            <label class="custom-control-label" for="check-@X.ID"></label>
                         </div>
-                        <div class="ml-3">
-                            <span class="d-block h5 text-hover-primary mb-0">@X.FirstName @X.LastName <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></span>
-                            <span class="d-block font-size-sm text-body">@X.Email</span>
-                        </div>
-                    </a>
-                </td>
-                <td>
-                    <span class="d-block h5 mb-0">@X.Department</span>
-                    <span class="d-block font-size-sm">TIP</span>
-                </td>
-                <td>
-                    <span></span>@X.Phone
-                </td>
-                <td>
-                    @switch (X.Type)
-                    {
-                        case 'F':
-                            typp = "Full time";
-                            break;
-                        case 'P':
-                            typp = "Part time";
-                            break;
-                        default:
-                            typp = "Unknown";
-                            break;
-                    }
-                    @typp
-                </td>
-               <td>
-                   <span class="badge badge-soft-info">
-                       <span class="bg-info"></span>@X.Organization
-                   </span>
-                </td>
-
-                <td>
-                    <div id="removeInternPopover" data-toggle="popover-dark" data-placement="left" title="Trainees will leave TMA" data-content="Check out this.">
-                        <a class="btn btn-sm btn-white" href="javascript:;" onclick="InternLeave(@X.ID, this)">
-                            <i class="tio-remove-circle-outlined"></i> Leave
+                    </td>
+                    <td class="table-column-pl-0">
+                        <a class="d-flex align-items-center" href="#">
+                            <div class="avatar avatar-circle">
+                                <img class="avatar-img" src="~/img/img1.jpg" alt="Image Description">
+                            </div>
+                            <div class="ml-3">
+                                <span class="d-block h5 text-hover-primary mb-0">@X.FirstName @X.LastName <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></span>
+                                <span class="d-block font-size-sm text-body">@X.Email</span>
+                            </div>
                         </a>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                    <td>
+                        <span class="d-block h5 mb-0">@X.Department</span>
+                        <span class="d-block font-size-sm">TIP</span>
+                    </td>
+                    <td>
+                        <span>@X.Phone</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-soft-info">
+                            <span class="bg-info"></span>@X.Duration
+                        </span>
+                    </td>
+                    <td>
+                        @switch (X.Type)
+                        {
+                            case 'F':
+                                typp = "Full time";
+                                break;
+                            case 'P':
+                                typp = "Part time";
+                                break;
+                            default:
+                                typp = "Unknown";
+                                break;
+                        }
+                        @typp
+                    </td>
+                    <td>
+                        <span>@X.Organization</span>
+                    </td>
+
+                    <td>
+                        <div id="removeInternPopover" data-toggle="popover-dark" data-placement="left" title="Trainees will leave TMA" data-content="Check out this.">
+                            <a class="btn btn-sm btn-white" href="javascript:;" onclick="InternLeave(@X.ID, this)">
+                                <i class="tio-remove-circle-outlined"></i> Leave
+                            </a>
+                        </div>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -186,15 +196,28 @@
                         </div>
                     </div>
                     <!-- End Form Group -->
+                    <!-- Form Group -->
                     <div class="row form-group">
                         <label for="emailLabel" class="col-sm-3 col-form-label input-label">Phone</label>
                         <div class="col-sm-9">
-                            <input asp-for="Phone" type="text" required class="js-masked-input form-control" id="PhoneNumberLabel" placeholder="+xx xxx.xxx.xxx" data-hs-mask-options="{
-                        &quot;template&quot;: &quot;+00 000.000.000&quot;
-                      }" maxlength="16" />
+                            <input asp-for="Phone" type="text" required class="js-masked-input form-control" placeholder="+84 000 000 000"
+                                   data-hs-mask-options='{
+                                   "template": "+00 000 000 000"
+                                   }' maxlength="16" />
                         </div>
                     </div>
-
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="emailLabel" class="col-sm-3 col-form-label input-label">Duration</label>
+                        <div class="col-sm-9">
+                            <input asp-for="Duration" type="text" required class="js-masked-input form-control" placeholder="Start Date - End Date"
+                                   data-hs-mask-options='{
+                                   "template": "00/00/0000 - 00/00/0000"
+                                   }'>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
                     <!-- Form Group -->
                     <div class="row form-group">
                         <label for="organizationLabel" class="col-sm-3 col-form-label input-label">Organization</label>

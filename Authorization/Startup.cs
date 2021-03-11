@@ -25,7 +25,7 @@ namespace WebApplication
 
             // CR:Add database context of webapp
             services.AddDbContext<DataContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("HOMEDB")));
+                        options.UseSqlServer(Configuration.GetConnectionString("TMADB")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
