@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
-using WebApplication.Models;
 
 namespace WebApplication
 {
@@ -13,10 +9,12 @@ namespace WebApplication
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasIndex(b => b.Email)
+                .IsUnique();
+
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.Email);
-
                 entity.Property(e => e.Email)
                     .HasMaxLength(100);
 
@@ -88,9 +86,8 @@ namespace WebApplication
 
             modelBuilder.Entity<Question>(entity =>
             {
-                entity.HasKey(e => e.Index);
-
-                entity.Property(e => e.Index)
+                entity.HasKey(e => e.ID);
+                entity.Property(e => e.ID)
                     .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Group)
@@ -111,6 +108,7 @@ namespace WebApplication
             {
                 new User
                 {
+                    ID=1,
                     FirstName = "Admin",
                     LastName = "One",
                     Email = "admin@x",
@@ -118,6 +116,7 @@ namespace WebApplication
                 },
                  new User
                 {
+                    ID=2,
                     FirstName = "Admin",
                     LastName = "Two",
                     Email = "admin@xx",
@@ -125,6 +124,7 @@ namespace WebApplication
                 },
                   new User
                 {
+                    ID=3,
                     FirstName = "Admin",
                     LastName = "Three",
                     Email = "admin@xxx",
@@ -163,42 +163,42 @@ namespace WebApplication
             {
                 new Question
                 {
-                    Index= 1,
+                    ID= 1,
                     Group = "Recruit",
                     InData = "Cho em hỏi TMA phỏng vấn tiếng Anh hay tiếng Việt?",
                     OutData = "Bên mình sẽ phỏng vấn cả tiếng Anh và tiếng Việt nha bạn."
                 },
                 new Question
                 {
-                    Index= 2,
+                    ID= 2,
                     Group = "Recruit",
                     InData = "Anh/chị cho em hỏi nếu test tiếng Anh ở công ty thì đề thi như thế nào ạ? Bao lâu sẽ có kết quả?",
                     OutData = "Chào bạn, đề thi sẽ theo chuẩn đề TOEIC, thông thường kết quả sẽ được thông báo trong vòng 1 tuần, tùy thuộc vào mỗi dự án."
                 },
                 new Question
                 {
-                    Index= 3,
+                    ID= 3,
                     Group = "Recruit",
                     InData = "Em là SV năm cuối (đang làm luận văn), chuyên ngành: Điện tử - Viễn thông, trường: ĐH Bách Khoa Tp. HCM. Em có 2 câu hỏi: TMA có tuyển thực tập sinh không? Nếu có, yêu cầu cụ thể (GPA, Tiếng Anh,...) như thế nào?",
                     OutData = "TMA thường xuyên tuyển thực tập sinh, sắp tới bên chị sẽ nhận hồ sơ thực tập để chuẩn bị cho đợt thực tập kế tiếp vào tháng 9. Hồ sơ ứng tuyển bao gồm:<ul class='mt-3'><li>CV Tiếng Anh;</li><li> Bảng điểm hoặc bằng Tiếng Anh(nếu có);</li><li> Hình 3x4;</li><li> Giấy giới thiệu thực tập</li></ul> "
                 },
                 new Question
                 {
-                    Index= 4,
+                    ID= 4,
                     Group = "Internship",
                     InData = "Ngoại ngữ có yêu cầu cao không Ad?",
                     OutData = "Nếu em đã có các bằng như (TOEIC, TOEFL, IELTS) tương đương TOEIC 450 trở lên thì không phải làm bài test em nhé."
                 },
                 new Question
                 {
-                    Index= 5,
+                    ID= 5,
                     Group = "Internship",
                     InData = "Test thực tập đầu vào như thế nào chị?",
                     OutData = "Bài test đầu vào gồm: IQ (25’) và tiếng Anh (nếu em chưa có bằng)"
                 },
                 new Question
                 {
-                    Index= 6,
+                    ID= 6,
                     Group = "Internship",
                     InData = "Thời gian thực tập yêu cầu là bao nhiêu vậy Ad?",
                     OutData = "Thời gian thực tập kéo dài 3 tháng, 2.5 ngày/tuần em à."

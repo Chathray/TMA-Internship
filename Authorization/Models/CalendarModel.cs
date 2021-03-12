@@ -1,27 +1,18 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using WebApplication.Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace WebApplication.Models
 {
     public class CalendarModel
     {
         public CalendarModel() { }
-        public CalendarModel(IList<EventType> a, IList<User> b)
+        public CalendarModel(IList<EventType> a, IList<Intern> b)
         {
             EvenTypes = a;
-            Usesr = b;
+            Intenrs = b;
         }
         public IList<EventType> EvenTypes { get; set; }
-        public IList<User> Usesr { get; set; }
+        public IList<Intern> Intenrs { get; set; }
 
         public string Creator { get; set; }
 
@@ -37,7 +28,7 @@ namespace WebApplication.Models
 
         public string GetUserList()
         {
-            return JsonConvert.SerializeObject(Usesr);
+            return JsonConvert.SerializeObject(Intenrs);
         }
-    }   
+    }
 }

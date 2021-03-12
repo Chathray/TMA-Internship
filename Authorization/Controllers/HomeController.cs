@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using WebApplication.Models;
 
@@ -76,7 +73,7 @@ namespace WebApplication.Controllers
         public IActionResult Question()
         {
             var model = _adapter.GetQuestions();
-            
+
             ShiftTopMenuData();
             return View(model);
         }
@@ -84,7 +81,7 @@ namespace WebApplication.Controllers
         [AcceptVerbs("GET")]
         public IActionResult Calendar()
         {
-            var guests = _adapter.GetUsers();
+            var guests = _adapter.GetInterns();
             var eventype = _adapter.GetEventTypes();
 
             var model = new CalendarModel(eventype, guests)
@@ -115,7 +112,7 @@ namespace WebApplication.Controllers
             {
                 case "fullcalendar-custom-event-hs-team":
                     even.Type = "Personal";
-                        break;
+                    break;
                 case "fullcalendar-custom-event-holidays":
                     even.Type = "Holidays";
                     break;

@@ -35,8 +35,8 @@
                 break;
             }
 
-            <div class="card" id="heading_@Model[index].Index">
-                <a class="pt-3 px-3 pb-2 card-btn btn-block collapsed" href="javascript:;" data-toggle="collapse" data-target="#question_@Model[index].Index" aria-expanded="false" aria-controls="question_@Model[index].Index">
+            <div class="card" id="heading_@Model[index].ID">
+                <a class="pt-3 px-3 pb-2 card-btn btn-block collapsed" href="javascript:;" data-toggle="collapse" data-target="#question_@Model[index].ID" aria-expanded="false" aria-controls="question_@Model[index].ID">
                     <p class="h5">Hỏi: @Html.DisplayFor(o => Model[index].InData)</p>
                     <span class="card-btn-toggle">
                         <span class="card-btn-toggle-default">
@@ -48,7 +48,7 @@
                     </span>
                 </a>
 
-                <div id="question_@Model[index].Index" class="collapse" aria-labelledby="heading_@Model[index].Index">
+                <div id="question_@Model[index].ID" class="collapse" aria-labelledby="heading_@Model[index].ID">
                     <div class="px-3">
                         <p><strong>Đáp: </strong>@Html.Raw(Model[index].OutData)</p>
                     </div>

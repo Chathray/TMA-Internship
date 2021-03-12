@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using BC = BCrypt.Net.BCrypt;
-using System.Linq;
-using WebApplication.Models;
 using System.Collections.Generic;
+using System.Linq;
+using BC = BCrypt.Net.BCrypt;
 
 namespace WebApplication
 {
@@ -67,7 +66,7 @@ namespace WebApplication
         {
             return _context.Questions
                 .OrderBy(y => y.Group)
-                .ThenBy(n => n.Index)
+                .ThenBy(n => n.ID)
                 .ToList();
         }
 
