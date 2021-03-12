@@ -84,9 +84,10 @@ namespace WebApplication.Controllers
         [AcceptVerbs("GET")]
         public IActionResult Calendar()
         {
-            var even = _adapter.GetEvents();
+            var guests = _adapter.GetUsers();
             var eventype = _adapter.GetEventTypes();
-            var model = new CalendarModel(eventype, even)
+
+            var model = new CalendarModel(eventype, guests)
             {
                 Creator = User.Claims.ElementAt(1).Value
             };
@@ -99,11 +100,37 @@ namespace WebApplication.Controllers
         public IActionResult CreateEvent(CalendarModel model)
         {
             Event even = _mapper.Map<Event>(model);
-            even.Image = "../img/frontapp.svg";           
+            even.Image = "../img/mastercard.svg";
+
+            var dat = model.Deadline.Split(" - ");
+            // Ngoại lệ ngày đơn
+            try
+            {
+                even.Start = dat[0];
+                even.End = dat[1];
+            }
+            catch { }
+
+            switch (model.Type)
+            {
+                case "fullcalendar-custom-event-hs-team":
+                    even.Type = "Personal";
+                        break;
+                case "fullcalendar-custom-event-holidays":
+                    even.Type = "Holidays";
+                    break;
+                case "fullcalendar-custom-event-tasks":
+                    even.Type = "Tasks";
+                    break;
+                case "fullcalendar-custom-event-reminders":
+                    even.Type = "Reminders";
+                    break;
+            }
+            even.ClassName = model.Type;
 
             _adapter.CreateEvent(even);
 
-            return RedirectToAction("/");
+            return RedirectToAction("Calendar");
         }
 
         [AllowAnonymous]

@@ -14,7 +14,7 @@ namespace WebApplication
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string Type { get; set; }
         [MaxLength(15)]
         public string Start { get; set; }
@@ -35,7 +35,8 @@ namespace WebApplication
         public string Image { get; set; }
 
         public string ClassName { get; set; }
-        [ForeignKey("ClassName")]
+
+        [ForeignKey("Type")]
         public EventType EventTypes { get; set; }
     }
 }

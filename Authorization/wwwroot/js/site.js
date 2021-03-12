@@ -189,7 +189,7 @@ $(document).on('ready', function () {
     var editableEvent = {}
 
     var fullcalendarEditable = $.HSCore.components.HSFullcalendar.init($('#js-fullcalendar'), {
-        initialDate: "2020-12-03",
+        initialDate: moment().format("YYYY-MM-DD"),
         headerToolbar: false,
         editable: true,
         defaultAllDay: false,
@@ -234,7 +234,7 @@ $(document).on('ready', function () {
               <div class="media mb-4">
                 <i class="tio-group-senior nav-icon"></i>
                 <div class="media-body">
-                  <span class="d-block text-dark">${getAvatars(event.event.extendedProps.gestsField) || 'Empty'}</span>
+                  <span class="d-block text-dark">Đang gặp issue ở đây</span>
                 </div>
               </div>
 
@@ -305,55 +305,14 @@ $(document).on('ready', function () {
 
 
         events:
-            // your event source
-            //{
-            //    url: '../Home/GetEvents',
-            //    method: 'POST',
-            //    failure: function () {
-            //        alert('there was an error while fetching events!');
-            //    }
-            //}
-
-            [
-                {
-                    "id": 1,
-                    title: "English Lesson",
-                    start: "2020-12-03",
-                    end: "2020-12-03",
-                    className: "fullcalendar-custom-event-hs-team",
-                    eventDescriptionLabel: "",
-                    eventLocationLabel: "",
-                    repeatField: "weekdays",
-                    allDay: true,
-                    gestsField: [
-                        {
-                            "value": "David Harrison",
-                            "src": "../img/img3.jpg"
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    title: "Spanish Lesson",
-                    start: "2020-12-03",
-                    end: "2020-12-03",
-                    className: "fullcalendar-custom-event-hs-team",
-                    eventDescriptionLabel: "",
-                    eventLocationLabel: "",
-                    repeatField: "everyday",
-                    allDay: true,
-                    gestsField: [
-                        {
-                            "value": "Anne Richard",
-                            "src": ""
-                        },
-                        {
-                            "value": "Finch Hoot",
-                            "src": "../img/img5.jpg"
-                        }
-                    ]
-                }
-            ]
+        // your event source
+        {
+            url: '../Home/GetEvents',
+            method: 'POST',
+            failure: function () {
+                alert('There was an error while fetching events!');
+            }
+        }
     })
 
     // Events
@@ -446,8 +405,11 @@ $(document).on('ready', function () {
             editableEvent.setStart(moment(date[0]).format('YYYY-MM-DD'))
             editableEvent.setEnd(date.length > 1 ? moment(date[1]).format('YYYY-MM-DD') : moment(date[0]).format('YYYY-MM-DD'))
         }
+
         $('#addEventToCalendarModal').modal('hide')
-        filterSearchExample.filter()
+        $('#create-event').submit();
+
+        //filterSearchExample.filter()
     })
 
     // Set Form
@@ -517,16 +479,18 @@ $(document).on('ready', function () {
         filterSearchExample.filter()
     })
 
-    filterSearchExample.filter()
+    try {
+        filterSearchExample.filter()
 
 
-    // ADD DRAGGABLE CLASS FOR CALENDAR
-    // =======================================================
-    const Draggable = FullCalendar.Draggable;
+        // ADD DRAGGABLE CLASS FOR CALENDAR
+        // =======================================================
+        const Draggable = FullCalendar.Draggable;
 
-    new Draggable($('#external-events')[0], {
-        itemSelector: '.fc-event'
-    });
-
+        new Draggable($('#external-events')[0], {
+            itemSelector: '.fc-event'
+        });
+    }
+    catch { }
 
 });

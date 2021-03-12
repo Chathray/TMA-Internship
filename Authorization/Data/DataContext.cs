@@ -42,7 +42,7 @@ namespace WebApplication
 
                 entity.Property(e => e.Avatar)
                     .IsRequired()
-                    .HasDefaultValue("./img/img1.jpg");
+                    .HasDefaultValue("../img/img1.jpg");
 
                 entity.Property(e => e.Phone)
                     .IsRequired()
@@ -71,7 +71,7 @@ namespace WebApplication
 
                 entity.Property(e => e.Avatar)
                     .IsRequired()
-                    .HasDefaultValue("./img/img1.jpg");
+                    .HasDefaultValue("../img/img1.jpg");
 
                 entity.Property(e => e.Type)
                     .IsRequired()
@@ -115,6 +115,20 @@ namespace WebApplication
                     LastName = "One",
                     Email = "admin@x",
                     PasswordHash = "$2a$11$cP33dCpCwF6KKK5wzqcQGOjBEwfFjXRK.ZofYLw1lVtX5kr5nVZ2q"
+                },
+                 new User
+                {
+                    FirstName = "Admin",
+                    LastName = "Two",
+                    Email = "admin@xx",
+                    PasswordHash = "$2a$11$cP33dCpCwF6KKK5wzqcQGOjBEwfFjXRK.ZofYLw1lVtX5kr5nVZ2q"
+                },
+                  new User
+                {
+                    FirstName = "Admin",
+                    LastName = "Three",
+                    Email = "admin@xxx",
+                    PasswordHash = "$2a$11$cP33dCpCwF6KKK5wzqcQGOjBEwfFjXRK.ZofYLw1lVtX5kr5nVZ2q"
                 }
             });
 
@@ -122,24 +136,24 @@ namespace WebApplication
             {
                 new EventType
                 {
-                    Name = "Personal",
+                    Type = "Personal",
                     Color = "primary",
                     ClassName = "fullcalendar-custom-event-hs-team"
                 }, new EventType
                 {
-                    Name = "Reminders",
+                    Type = "Reminders",
                     Color = "danger",
                     ClassName = "fullcalendar-custom-event-reminders"
 
                 }, new EventType
                 {
-                    Name = "Tasks",
+                    Type = "Tasks",
                     Color = "dark",
                     ClassName = "fullcalendar-custom-event-tasks"
 
                 },new EventType
                 {
-                    Name = "Holidays",
+                    Type = "Holidays",
                     Color = "warning",
                     ClassName = "fullcalendar-custom-event-holidays"
                 },

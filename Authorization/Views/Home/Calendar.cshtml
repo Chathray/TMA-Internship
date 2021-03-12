@@ -70,16 +70,74 @@
                             <div class="card-body">
                                 <small class="card-subtitle">My calendars</small>
 
-                                @foreach (var item in Model.ET)
+                                @foreach (var item in Model.EvenTypes)
                                 {
                                     <!-- Custom Checkbox -->
                                     <div class="custom-control custom-checkbox checkbox-outline-@item.Color mb-2" data-filter>
-                                        <input type="checkbox" id="calendar@{@item.Name}Check" class="custom-control-input indeterminate-checkbox" value="@item.ClassName" checked>
-                                        <label class="custom-control-label" for="calendar@{@item.Name}Check">@item.Name</label>
+                                        <input type="checkbox" id="calendar@{@item.Type}Check" class="custom-control-input indeterminate-checkbox" value="@item.ClassName" checked>
+                                        <label class="custom-control-label" for="calendar@{@item.Type}Check">@item.Type</label>
                                     </div>
                                     <!-- End Custom Checkbox -->
                                 }
 
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                </div>
+                <!-- End Unfold -->
+                <!-- Unfold -->
+                <div class="hs-unfold mr-2">
+                    <a class="js-hs-unfold-invoker btn btn-white dropdown-toggle" href="javascript:;"
+                       data-hs-unfold-options='{
+                     "target": "#calendarEventsDropdown",
+                     "type": "css-animation"
+                   }'>
+                        <i class="tio-event mr-1"></i> Events
+                    </a>
+
+                    <div id="calendarEventsDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm-right dropdown-card" style="min-width: 15rem;">
+                        <!-- Card -->
+                        <div class="card">
+                            <div class="card-body card-body-height">
+                                <small class="card-subtitle">Drag these onto the calendar:</small>
+
+                                <!-- External Events -->
+                                <div id="external-events" class="fullcalendar-custom">
+                                    <!-- Event -->
+                                    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-daygrid-inline-block-event fullcalendar-custom-event-hs-team'
+                                         data-event='{
+                               "title": "Open a new task on Jira",
+                               "image": "../img/frontapp.svg",
+                               "className": "",
+                               "forceEvent": true
+                             }'>
+                                        <div class='fc-event-title'>
+                                            <div class='d-flex align-items-center'>
+                                                <img class="avatar avatar-xss mr-2" src="~/img/frontapp.svg" alt="Image Description">
+                                                <span>Open a new task on Jira</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Event -->
+                                    <!-- Event -->
+                                    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event fc-daygrid-inline-block-event fullcalendar-custom-event-reminders'
+                                         data-event='{
+                               "title": "Send weekly invoice to John",
+                               "image": "../img/google-webdev.svg",
+                               "className": "fc-event-success",
+                               "forceEvent": true
+                             }'>
+                                        <div class='fc-event-title'>
+                                            <div class='d-flex align-items-center'>
+                                                <img class="avatar avatar-xss mr-2" src="~/img/google-webdev.svg" alt="Image Description">
+                                                <span>Send weekly invoice to John</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Event -->
+                                </div>
+                                <!-- End External Events -->
                             </div>
                         </div>
                         <!-- End Card -->
@@ -147,9 +205,9 @@
                           "dropdownAutoWidth": true,
                           "width": true
                         }'>
-                                @foreach (var item in Model.ET)
+                                @foreach (var item in Model.EvenTypes)
                                 {
-                                    <option value="@item.ClassName" selected data-option-template='<span class="legend-indicator bg-@item.Color"></span>@item.Name'>@item.Name</option>
+                                    <option value="@item.ClassName" selected data-option-template='<span class="legend-indicator bg-@item.Color"></span>@item.Type'>@item.Type</option>
                                 }
                             </select>
                             <!-- End Select -->
@@ -213,22 +271,11 @@
                             <input asp-for="GestsField" required class="tagify-form-control form-control" id="eventGestsLabel" placeholder="Add guests" aria-label="Add guests"
                                    data-hs-tagify-options='{
                          "delimiters": null,
-                         "whitelist": [
-                           {
-                             "value": "Amanda Harvey",
-                             "src": ""
-                           }, {
-                             "value": "Finch Hoot",
-                             "src": "../img/img5.jpg"
-                           }, {
-                             "value": "Ella Lauda",
-                             "src": "../img/img9.jpg"
-                           }
-                         ],
                          "dropdown": {
-                           "enabled": 0,
-                           "classname": "tagify__dropdown__menu"
-                         }
+                         "enabled": 0,
+                         "classname": "tagify__dropdown__menu"
+                         },
+                         "whitelist": @Model.GetUserList()
                        }'>
                             <!-- End Tagify -->
                         </div>

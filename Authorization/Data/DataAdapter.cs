@@ -109,9 +109,9 @@ namespace WebApplication
         {
             return _context.Events.ToList();
         }
-        internal DbSet<Event> GetEven()
+        internal IList<User> GetUsers()
         {
-            return _context.Events;
+            return _context.Users.ToList();
         }
     }
 }
