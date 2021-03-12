@@ -9,6 +9,7 @@ namespace WebApplication
         {
             CreateMap<AuthenticationModel, User>();
             CreateMap<IndexModel, Intern>();
+            CreateMap<CalendarModel, Event>();
         }
     }
 }

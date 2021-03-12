@@ -15,6 +15,11 @@ namespace WebApplication
             _context = context;
         }
 
+        internal DataContext GetContext()
+        {
+            return _context;
+        }
+
         public User UserCheck(string eml, string pas)
         {
             if (string.IsNullOrEmpty(eml) || string.IsNullOrEmpty(pas))
@@ -89,6 +94,13 @@ namespace WebApplication
             return user;
         }
 
+        internal Event CreateEvent(Event even)
+        {
+            _context.Events.Add(even);
+            _context.SaveChanges();
+            return even;
+        }
+
         internal IList<EventType> GetEventTypes()
         {
             return _context.EventTypes.ToList();
@@ -96,6 +108,10 @@ namespace WebApplication
         internal IList<Event> GetEvents()
         {
             return _context.Events.ToList();
+        }
+        internal DbSet<Event> GetEven()
+        {
+            return _context.Events;
         }
     }
 }

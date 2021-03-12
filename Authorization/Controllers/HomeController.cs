@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -20,6 +23,7 @@ namespace WebApplication.Controllers
             _adapter = new DataAdapter(context);
             _mapper = mapper;
             _logger = logger;
+
         }
 
         private void ShiftTopMenuData()
@@ -29,7 +33,6 @@ namespace WebApplication.Controllers
             ViewData["status"] = User.Claims.ElementAt(2).Value;
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
@@ -39,7 +42,6 @@ namespace WebApplication.Controllers
             return View(model);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Index(IndexModel model)
         {
@@ -52,14 +54,13 @@ namespace WebApplication.Controllers
             {
                 Response.StatusCode = -1;
             }
-            // shift data to view
+
             model = new IndexModel(_adapter.GetInterns());
 
             ShiftTopMenuData();
             return View(model);
         }
 
-        [Authorize]
         [HttpPost]
         public string InternLeave(int id)
         {
@@ -75,19 +76,41 @@ namespace WebApplication.Controllers
         public IActionResult Question()
         {
             var model = _adapter.GetQuestions();
+            
+            ShiftTopMenuData();
             return View(model);
         }
 
+        [AcceptVerbs("GET")]
         public IActionResult Calendar()
         {
-            var e = _adapter.GetEvents();
-            var et = _adapter.GetEventTypes();
-            var model = new CalendarModel(et, e);
-            model.Creator = User.Claims.ElementAt(1).Value;
+            var even = _adapter.GetEvents();
+            var eventype = _adapter.GetEventTypes();
+            var model = new CalendarModel(eventype, even)
+            {
+                Creator = User.Claims.ElementAt(1).Value
+            };
 
+            ShiftTopMenuData();
             return View(model);
         }
 
+        [AcceptVerbs("POST")]
+        public IActionResult CreateEvent(CalendarModel model)
+        {
+            Event even = _mapper.Map<Event>(model);
+            even.Image = "../img/frontapp.svg";           
+
+            _adapter.CreateEvent(even);
+
+            return RedirectToAction("/");
+        }
+
+        [AllowAnonymous]
+        public IActionResult GetEvents()
+        {
+            return Json(_adapter.GetEvents());
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

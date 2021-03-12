@@ -124,24 +124,24 @@ namespace WebApplication
                 {
                     Name = "Personal",
                     Color = "primary",
-                    ClassName = "hs-team"
+                    ClassName = "fullcalendar-custom-event-hs-team"
                 }, new EventType
                 {
                     Name = "Reminders",
                     Color = "danger",
-                    ClassName = "reminders"
+                    ClassName = "fullcalendar-custom-event-reminders"
 
                 }, new EventType
                 {
                     Name = "Tasks",
                     Color = "dark",
-                    ClassName = "tasks"
+                    ClassName = "fullcalendar-custom-event-tasks"
 
                 },new EventType
                 {
                     Name = "Holidays",
                     Color = "warning",
-                    ClassName = "holidays"
+                    ClassName = "fullcalendar-custom-event-holidays"
                 },
             });
 

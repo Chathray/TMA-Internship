@@ -17,6 +17,7 @@ function InternLeave(iid, btn) {
 }
 
 
+
 $(document).on('ready', function () {
 
     // INITIALIZATION OF MEGA MENU
@@ -256,7 +257,7 @@ $(document).on('ready', function () {
                   <img class="avatar-img" src="../img/img6.jpg" alt="Image Description">
                 </div>
                 <div class="media-body">
-                  <span class="d-block text-dark">Mark Williams</span>
+                  <span class="d-block text-dark">Chath Guy</span>
                 </div>
               </div>
 
@@ -301,210 +302,58 @@ $(document).on('ready', function () {
         drop({ draggedEl }) {
             $(draggedEl).remove()
         },
-        events: [
-            {
-                id: 1,
-                title: "English Lesson",
-                start: "2020-12-03",
-                end: "2020-12-03",
-                className: "fullcalendar-custom-event-hs-team",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "weekdays",
-                allDay: true,
-                gestsField: [
-                    {
-                        "value": "David Harrison",
-                        "src": "../img/img3.jpg"
-                    }
-                ]
-            },
-            {
-                id: 2,
-                title: "Spanish Lesson",
-                start: "2020-12-03",
-                end: "2020-12-03",
-                className: "fullcalendar-custom-event-hs-team",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "everyday",
-                allDay: true,
-                gestsField: [
-                    {
-                        "value": "Anne Richard",
-                        "src": ""
-                    },
-                    {
-                        "value": "Finch Hoot",
-                        "src": "../img/img5.jpg"
-                    }
-                ]
-            },
-            {
-                id: 3,
-                title: "Monthly presentation (in PowerPoint)",
-                start: "2020-12-03 04:00",
-                end: "2020-12-03 05:00",
-                className: "fullcalendar-custom-event-reminders",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "Online",
-                repeatField: "everyday",
-                gestsField: [],
-                image: '../img/atlassian.svg'
-            },
-            {
-                id: 4,
-                title: "Complete Figma course: Go from zero to hero in Figma",
-                start: "2020-12-06 02:00",
-                end: "2020-12-08 15:00",
-                className: "fullcalendar-custom-event-hs-team",
-                eventDescriptionLabel: "Learn Figma like a Professional! Start from the basics and go all the way to creating your own design!",
-                eventLocationLabel: "Online",
-                repeatField: "never",
-                gestsField: [
-                    {
-                        "value": "Bob Dean",
-                        "src": ""
-                    },
-                    {
-                        "value": "Ella Lauda",
-                        "src": "../img/img9.jpg"
-                    },
-                    {
-                        "value": "Lori Hunter",
-                        "src": ""
-                    },
-                    {
-                        "value": "Costa Quinn",
-                        "src": "../img/img6.jpg"
-                    }
-                ],
-                image: '../img/atlassian.svg'
-            },
-            {
-                id: 5,
-                title: "Independence day",
-                start: "2020-12-01",
-                end: "2020-12-02",
-                className: "fullcalendar-custom-event-holidays",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "never",
-                gestsField: [],
-                image: ''
-            },
-            {
-                id: 6,
-                title: "Teachers day",
-                start: "2020-12-01",
-                end: "2020-12-02",
-                className: "fullcalendar-custom-event-holidays",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "never",
-                gestsField: [],
-                image: ''
-            },
-            {
-                id: 7,
-                title: "Send weekly invoice to John",
-                start: "2020-12-10",
-                end: "2020-12-11",
-                className: "fullcalendar-custom-event-hs-team",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "everyday",
-                allDay: true,
-                gestsField: [
-                    {
-                        "value": "Linda Bates",
-                        "src": "../img/img8.jpg"
-                    },
-                    {
-                        "value": "Rachel Doe",
-                        "src": ""
-                    }
-                ],
-                image: '../img/atlassian.svg'
-            },
-            {
-                id: 8,
-                title: "Shoot a message to Christina on Slack",
-                start: "2020-12-18",
-                end: "2020-12-20",
-                className: "fullcalendar-custom-event-tasks",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "everyday",
-                gestsField: [
-                    {
-                        "value": "Brian Halligan",
-                        "src": ""
-                    }
-                ],
-                image: '../img/atlassian.svg'
-            },
-            {
-                id: 9,
-                title: "Open a calendar task on Jira",
-                start: "2020-12-03 00:00",
-                end: "2020-12-03 04:00",
-                className: "fullcalendar-custom-event-hs-team",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "never",
-                gestsField: [
-                    {
-                        "value": "Clarice Boone",
-                        "src": "../img/img7.jpg"
-                    },
-                    {
-                        "value": "Sam Kart",
-                        "src": "../img/img4.jpg"
-                    },
-                    {
-                        "value": "Mark Williams",
-                        "src": "../img/img6.jpg"
-                    }
-                ],
-                image: '../img/atlassian.svg'
-            },
-            {
-                id: 10,
-                title: "Weekly presentation (in PowerPoint)",
-                start: "2020-12-14",
-                end: "2020-12-17",
-                className: "fullcalendar-custom-event-reminders",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "Online",
-                repeatField: "everyday",
-                gestsField: [],
-                image: '../img/atlassian.svg'
-            },
-            {
-                id: 11,
-                title: "Launch",
-                start: "2020-12-03 01:00",
-                end: "2020-12-03 02:00",
-                className: "fullcalendar-custom-event-hs-team",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "",
-                repeatField: "everyday",
-                gestsField: []
-            },
-            {
-                id: 12,
-                title: "Make monthly payments via MasterCard",
-                start: "2020-12-11",
-                end: "2020-12-12",
-                className: "fullcalendar-custom-event-tasks",
-                eventDescriptionLabel: "",
-                eventLocationLabel: "Online",
-                repeatField: "everyday",
-                gestsField: [],
-                image: '../img/atlassian.svg'
-            }
-        ]
+
+
+        events:
+            // your event source
+            //{
+            //    url: '../Home/GetEvents',
+            //    method: 'POST',
+            //    failure: function () {
+            //        alert('there was an error while fetching events!');
+            //    }
+            //}
+
+            [
+                {
+                    "id": 1,
+                    title: "English Lesson",
+                    start: "2020-12-03",
+                    end: "2020-12-03",
+                    className: "fullcalendar-custom-event-hs-team",
+                    eventDescriptionLabel: "",
+                    eventLocationLabel: "",
+                    repeatField: "weekdays",
+                    allDay: true,
+                    gestsField: [
+                        {
+                            "value": "David Harrison",
+                            "src": "../img/img3.jpg"
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Spanish Lesson",
+                    start: "2020-12-03",
+                    end: "2020-12-03",
+                    className: "fullcalendar-custom-event-hs-team",
+                    eventDescriptionLabel: "",
+                    eventLocationLabel: "",
+                    repeatField: "everyday",
+                    allDay: true,
+                    gestsField: [
+                        {
+                            "value": "Anne Richard",
+                            "src": ""
+                        },
+                        {
+                            "value": "Finch Hoot",
+                            "src": "../img/img5.jpg"
+                        }
+                    ]
+                }
+            ]
     })
 
     // Events

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,25 +12,27 @@ namespace WebApplication
         public int ID { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Type { get; set; }
-
+        [MaxLength(100)]
         public string Title { get; set; }
-
+        [MaxLength(100)]
+        public string Type { get; set; }
+        [MaxLength(15)]
         public string Start { get; set; }
-
+        [MaxLength(15)]
         public string End { get; set; }
-
+        public bool AllDay { get; set; }
+        [MaxLength(100)]
+        public string GestsField { get; set; }
+        [MaxLength(100)]
+        public string RepeatField { get; set; }
+        [MaxLength(100)]
+        public string EventLocationLabel { get; set; }
+        [MaxLength(250)]
         public string EventDescriptionLabel { get; set; }
 
-        public string EventLocationLabel { get; set; }
 
-        public string RepeatField { get; set; }
-
-        public string GestsField { get; set; }
-
+        //
         public string Image { get; set; }
-
 
         public string ClassName { get; set; }
         [ForeignKey("ClassName")]

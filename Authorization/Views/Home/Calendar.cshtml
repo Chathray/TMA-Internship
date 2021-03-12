@@ -1,6 +1,6 @@
 ﻿@model CalendarModel
 <!-- Page Header -->
-<div class="pl-3 mb-3">
+<div class="pl-0 mb-3">
     <div class="row align-items-end">
         <div class="col-sm mb-2 mb-sm-0">
             <nav aria-label="breadcrumb">
@@ -22,7 +22,7 @@
 </div>
 <!-- End Page Header -->
 
-<div class="px-3">
+<div class="px-0">
     <!-- Custom Header -->
     <div class="row align-items-sm-center mb-4">
         <div class="col-lg-5 mb-2 mb-lg-0">
@@ -74,7 +74,7 @@
                                 {
                                     <!-- Custom Checkbox -->
                                     <div class="custom-control custom-checkbox checkbox-outline-@item.Color mb-2" data-filter>
-                                        <input type="checkbox" id="calendar@{@item.Name}Check" class="custom-control-input indeterminate-checkbox" value="fullcalendar-custom-event-@item.ClassName" checked>
+                                        <input type="checkbox" id="calendar@{@item.Name}Check" class="custom-control-input indeterminate-checkbox" value="@item.ClassName" checked>
                                         <label class="custom-control-label" for="calendar@{@item.Name}Check">@item.Name</label>
                                     </div>
                                     <!-- End Custom Checkbox -->
@@ -110,107 +110,108 @@
 <!-- Modal -->
 <div class="modal fade" id="addEventToCalendarModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-close">
-                <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
-                    <i class="tio-clear tio-lg"></i>
-                </button>
-            </div>
-            <!-- End Header -->
-            <!-- Body -->
-            <div class="modal-body">
-                <!-- Media -->
-                <div class="media">
-                    <label for="eventTitleLabel" class="sr-only">Title</label>
-
-                    <textarea id="eventTitleLabel" class="form-control form-control-title" placeholder="Add title"></textarea>
+        <form id="create-event" asp-controller="Home" asp-action="CreateEvent">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-close">
+                    <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                        <i class="tio-clear tio-lg"></i>
+                    </button>
                 </div>
-                <!-- End Media -->
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="modal-body">
+                    <!-- Media -->
+                    <div class="media">
+                        <label for="eventTitleLabel" class="sr-only">Title</label>
 
-                <div class="row form-group">
-                    <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                            <i class="tio-format-points nav-icon"></i>
-
-                            <div class="media-body">Event type</div>
-                        </div>
+                        <textarea asp-for="Title" id="eventTitleLabel" required class="form-control form-control-title" placeholder="Add title"></textarea>
                     </div>
+                    <!-- End Media -->
 
-                    <div class="col-sm">
-                        <!-- Select -->
-                        <select class="js-select2-custom custom-select" size="1" style="opacity: 0;" id="eventColorLabel"
-                                data-hs-select2-options='{
+                    <div class="row form-group">
+                        <div class="col-sm-3 mb-2 mb-sm-0">
+                            <div class="media align-items-center mt-2">
+                                <i class="tio-format-points nav-icon"></i>
+
+                                <div class="media-body">Event type</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <!-- Select -->
+                            <select asp-for="Type" class="js-select2-custom custom-select" size="1" style="opacity: 0;" id="eventColorLabel"
+                                    data-hs-select2-options='{
                           "minimumResultsForSearch": "Infinity",
                           "placeholder": "Select event color",
                           "dropdownAutoWidth": true,
                           "width": true
                         }'>
-                            @foreach (var item in Model.ET)
-                            {
-                                <option value="fullcalendar-custom-event-@item.ClassName" selected data-option-template='<span class="legend-indicator bg-@item.Color"></span>@item.Name'>@item.Name</option>
-                            }
-                        </select>
-                        <!-- End Select -->
-                    </div>
-                </div>
-                <!-- End Row -->
-
-                <div class="row form-group">
-                    <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                            <i class="tio-event nav-icon"></i>
-
-                            <div class="media-body">Deadline</div>
+                                @foreach (var item in Model.ET)
+                                {
+                                    <option value="@item.ClassName" selected data-option-template='<span class="legend-indicator bg-@item.Color"></span>@item.Name'>@item.Name</option>
+                                }
+                            </select>
+                            <!-- End Select -->
                         </div>
                     </div>
+                    <!-- End Row -->
 
-                    <div class="col-sm">
-                        <label for="eventDateRangeLabel" class="sr-only">Date</label>
+                    <div class="row form-group">
+                        <div class="col-sm-3 mb-2 mb-sm-0">
+                            <div class="media align-items-center mt-2">
+                                <i class="tio-event nav-icon"></i>
 
-                        <!-- Flatpickr -->
-                        <input type="text" id="eventDateRangeLabel" class="js-flatpickr form-control flatpickr-custom mb-2" placeholder="Select dates"
-                               data-hs-flatpickr-options='{
-                         "dateFormat": "m/d/Y",
+                                <div class="media-body">Deadline</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <label for="eventDateRangeLabel" class="sr-only">Date</label>
+
+                            <!-- Flatpickr -->
+                            <input asp-for="Deadline" type="text" id="eventDateRangeLabel" required class="js-flatpickr form-control flatpickr-custom mb-2" placeholder="Select dates"
+                                   data-hs-flatpickr-options='{
+                         "dateFormat": "Y-m-d",
                          "mode": "range",
-                         "minDate": "12/01/2020"
+                         "minDate": "2020-12-20"
                        }'>
-                        <!-- End Flatpickr -->
+                            <!-- End Flatpickr -->
 
-                        <label for="eventRepeatLabel" class="text-body mr-2 mb-0">Repeat:</label>
+                            <label for="eventRepeatLabel" class="text-body mr-2 mb-0">Repeat:</label>
 
-                        <!-- Select -->
-                        <select class="js-select2-custom" id="eventRepeatLabel"
-                                data-hs-select2-options='{
+                            <!-- Select -->
+                            <select asp-for="RepeatField" class="js-select2-custom" id="eventRepeatLabel"
+                                    data-hs-select2-options='{
                           "minimumResultsForSearch": "Infinity",
                           "customClass": "custom-select custom-select-sm",
                           "dropdownAutoWidth": true,
                           "width": true
                         }'>
-                            <option value="everyday" selected>Everyday</option>
-                            <option value="weekdays">Weekdays</option>
-                            <option value="never">Never</option>
-                        </select>
-                        <!-- End Select -->
-                    </div>
-                </div>
-                <!-- End Row -->
-
-                <div class="row form-group">
-                    <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                            <i class="tio-group-senior nav-icon"></i>
-
-                            <div class="media-body">Guests</div>
+                                <option value="everyday" selected>Everyday</option>
+                                <option value="weekdays">Weekdays</option>
+                                <option value="never">Never</option>
+                            </select>
+                            <!-- End Select -->
                         </div>
                     </div>
+                    <!-- End Row -->
 
-                    <div class="col-sm">
-                        <label for="eventGestsLabel" class="sr-only">Add guests</label>
+                    <div class="row form-group">
+                        <div class="col-sm-3 mb-2 mb-sm-0">
+                            <div class="media align-items-center mt-2">
+                                <i class="tio-group-senior nav-icon"></i>
 
-                        <!-- Tagify -->
-                        <input class="tagify-form-control form-control" id="eventGestsLabel" placeholder="Add guests" aria-label="Add guests"
-                               data-hs-tagify-options='{
+                                <div class="media-body">Guests</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <label for="eventGestsLabel" class="sr-only">Add guests</label>
+
+                            <!-- Tagify -->
+                            <input asp-for="GestsField" required class="tagify-form-control form-control" id="eventGestsLabel" placeholder="Add guests" aria-label="Add guests"
+                                   data-hs-tagify-options='{
                          "delimiters": null,
                          "whitelist": [
                            {
@@ -229,92 +230,93 @@
                            "classname": "tagify__dropdown__menu"
                          }
                        }'>
-                        <!-- End Tagify -->
-                    </div>
-                </div>
-                <!-- End Row -->
-
-                <div class="row form-group">
-                    <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                            <i class="tio-comment-video nav-icon"></i>
-
-                            <div class="media-body">Conference call</div>
+                            <!-- End Tagify -->
                         </div>
                     </div>
+                    <!-- End Row -->
 
-                    <div class="col-sm">
-                        <a class="btn btn-primary" href="#">
-                            <i class="tio-comment-video mr-1"></i> Add Zoom video conferencing
-                        </a>
-                    </div>
-                </div>
-                <!-- End Row -->
+                    <div class="row form-group">
+                        <div class="col-sm-3 mb-2 mb-sm-0">
+                            <div class="media align-items-center mt-2">
+                                <i class="tio-comment-video nav-icon"></i>
 
-                <div class="row form-group">
-                    <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                            <i class="tio-poi nav-icon"></i>
-
-                            <div class="media-body">Location</div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm">
-                        <label for="eventLocationLabel" class="sr-only">Add location</label>
-
-                        <input type="text" class="form-control" id="eventLocationLabel" placeholder="Add location" aria-label="Add location">
-                    </div>
-                </div>
-                <!-- End Row -->
-
-                <div class="row form-group">
-                    <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                            <i class="tio-text-left nav-icon"></i>
-
-                            <div class="media-body">Description</div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm">
-                        <label for="eventDescriptionLabel" class="sr-only">Add description</label>
-
-                        <textarea id="eventDescriptionLabel" class="form-control" placeholder="Add description"></textarea>
-                    </div>
-                </div>
-                <!-- End Row -->
-
-                <div class="row">
-                    <div class="col-sm-3 mb-2 mb-sm-0">
-                        <div class="media align-items-center mt-2">
-                            <i class="tio-user-big-outlined nav-icon"></i>
-
-                            <div class="media-body">Created by</div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm">
-                        <!-- Media -->
-                        <a class="d-inline-flex align-items-center" href="./user-profile.html">
-                            <div class="avatar avatar-sm avatar-circle mr-3">
-                                <img class="avatar-img" src="../img/chathray.jpg" alt="Image Description">
+                                <div class="media-body">Conference call</div>
                             </div>
-                            <div class="media-body"><span class="h5 text-hover-primary">@Model.Creator</span></div>
-                        </a>
-                        <!-- End Media -->
+                        </div>
+
+                        <div class="col-sm">
+                            <a class="btn btn-primary" href="#">
+                                <i class="tio-comment-video mr-1"></i> Add Zoom video conferencing
+                            </a>
+                        </div>
                     </div>
+                    <!-- End Row -->
+
+                    <div class="row form-group">
+                        <div class="col-sm-3 mb-2 mb-sm-0">
+                            <div class="media align-items-center mt-2">
+                                <i class="tio-poi nav-icon"></i>
+
+                                <div class="media-body">Location</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <label for="eventLocationLabel" class="sr-only">Add location</label>
+
+                            <input asp-for="EventLocationLabel" type="text" required class="form-control" id="eventLocationLabel" placeholder="Add location" aria-label="Add location">
+                        </div>
+                    </div>
+                    <!-- End Row -->
+
+                    <div class="row form-group">
+                        <div class="col-sm-3 mb-2 mb-sm-0">
+                            <div class="media align-items-center mt-2">
+                                <i class="tio-text-left nav-icon"></i>
+
+                                <div class="media-body">Description</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <label for="eventDescriptionLabel" class="sr-only">Add description</label>
+
+                            <textarea asp-for="EventDescriptionLabel" id="eventDescriptionLabel" required class="form-control" placeholder="Add description"></textarea>
+                        </div>
+                    </div>
+                    <!-- End Row -->
+
+                    <div class="row">
+                        <div class="col-sm-3 mb-2 mb-sm-0">
+                            <div class="media align-items-center mt-2">
+                                <i class="tio-user-big-outlined nav-icon"></i>
+
+                                <div class="media-body">Created by</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <!-- Media -->
+                            <a class="d-inline-flex align-items-center" href="./user-profile.html">
+                                <div class="avatar avatar-sm avatar-circle mr-3">
+                                    <img class="avatar-img" src="../img/chathray.jpg" alt="Image Description">
+                                </div>
+                                <div class="media-body"><span class="h5 text-hover-primary">@Model.Creator</span></div>
+                            </a>
+                            <!-- End Media -->
+                        </div>
+                    </div>
+                    <!-- End Row -->
                 </div>
-                <!-- End Row -->
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" id="discardFormt" class="btn btn-white" data-dismiss="modal">Discard</button>
+                    <button type="button" id="processEvent" class="btn btn-primary">Create event</button>
+                </div>
+                <!-- End Footer -->
             </div>
-            <!-- End Body -->
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" id="discardFormt" class="btn btn-white" data-dismiss="modal">Discard</button>
-                <button type="button" id="processEvent" class="btn btn-primary">Create event</button>
-            </div>
-            <!-- End Footer -->
-        </div>
+        </form>
     </div>
 </div>
 
