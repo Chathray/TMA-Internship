@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using WebApplication.Models;
@@ -43,6 +44,8 @@ namespace WebApplication.Controllers
         public IActionResult Index(IndexModel model)
         {
             Intern intern = _mapper.Map<Intern>(model);
+            intern.DateCreated = DateTime.Now;
+            intern.CreatedBy = User.Claims.ElementAt(1).Value;
             try
             {
                 _adapter.CreateIntern(intern);

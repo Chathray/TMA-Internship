@@ -20,6 +20,8 @@ namespace WebApplication
         public char Type { get; set; }
         public string Department { get; set; }
         public string Organization { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 
     public class WhitelistSerializer : JsonConverter
