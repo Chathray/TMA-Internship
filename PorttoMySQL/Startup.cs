@@ -23,9 +23,6 @@ namespace WebApplication
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
 
-            //// CR:Add database context of webapp
-            //services.AddDbContext<SqlServerContext>(options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("TMADB")));
             // CR:Add database context of webapp
             services.AddDbContext<DataContext>(options =>
                         options.UseMySQL(Configuration.GetConnectionString("MYSQL")));

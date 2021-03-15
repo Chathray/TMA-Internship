@@ -15,11 +15,11 @@ namespace WebApplication
         public string LastName { get; set; }
         public string DateOfBirth { get; set; }
         public string Gender { get; set; }
+        public string Phone { get; set; }
         public int CreatedBy { get; set; }
         public int UpdatedBy { get; set; }
         public string UpdatedDate { get; set; }
         public string CreatedDate { get; set; }
-        public string Phone { get; set; }
         public string Duration { get; set; }
         public string Type { get; set; }
         public int Department { get; set; }

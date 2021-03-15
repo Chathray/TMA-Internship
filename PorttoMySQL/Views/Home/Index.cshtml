@@ -15,7 +15,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Index</li>
                 </ol>
             </nav>
-            <h3 class="page-header-title mb-5">@ViewData["Title"]</h3>
+            <h3 class="page-header-title mb-5">@ViewData["Title"] <span class="badge badge-soft-dark ml-2">97,524</span></h3>
         </div>
 
         <div class="col-sm-auto">
@@ -57,17 +57,19 @@
                 <th class="table-column-pl-0">Name</th>
                 <th>Position</th>
                 <th>Phone</th>
+                <th>Day Of Birth</th>
+                <th>Gender</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Organization</th>
-                <th>Date Created</th>
-                <th>Created By</th>
+                <th>Created Date</th>
+                <th>Create By</th>
                 <th></th>
             </tr>
         </thead>
 
         <tbody>
-            @foreach (var X in Model.Interns)
+            @foreach (var X in Model.Intrs)
             {
                 <tr>
                     <td class="table-column-pr-0">
@@ -97,6 +99,12 @@
                         </span>
                     </td>
                     <td>
+                        <span>@X.DateOfBirth</span>
+                    </td>
+                    <td>
+                        <span>@X.Gender</span>
+                    </td>
+                    <td>
                         <span>@X.Duration.Substring(0, 10)</span>
                     </td>
                     <td>
@@ -109,7 +117,7 @@
                         <span>@X.CreatedDate</span>
                     </td>
                     <td>
-                        <span>@X.CreatedBy</span>
+                        <span>@Model.Usrs.ElementAt(X.CreatedBy).Email</span>
                     </td>
                     <td>
                         <div id="removeInternPopover" data-toggle="popover-dark" data-placement="left" title="Trainees will leave TMA" data-content="Check out this.">
@@ -184,6 +192,37 @@
                     <!-- End Form Group -->
                     <!-- Form Group -->
                     <div class="row form-group">
+                        <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Birthday</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm-down-break">
+                                <!-- Flatpickr -->
+                                <input asp-for="DateOfBirth" type="text" class="js-flatpickr form-control" placeholder="Select dates"
+                                       data-hs-flatpickr-options='{
+                                           "dateFormat": "d/m/Y"
+                                       }'>
+                                <!-- End Flatpickr -->
+
+                                <div class="input-group-append">
+                                    <!-- Select -->
+                                    <div class="select2-custom">
+                                        <select asp-for="Gender" class="js-select2-custom custom-select" size="1" style="opacity: 0;" name="phoneSelect"
+                                                data-hs-select2-options='{
+                                                    "minimumResultsForSearch": "Infinity",
+                                                    "dropdownAutoWidth": true,
+                                                    "width": "6rem"
+                                                }'>
+                                            <option value="male" selected>Male</option>
+                                            <option value="Home">Female</option>
+                                        </select>
+                                        <!-- End Select -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Group --> <!-- Form Group -->
+                    <div class="row form-group">
                         <label for="emailLabel" class="col-sm-3 col-form-label input-label">Email</label>
 
                         <div class="col-sm-9">
@@ -216,25 +255,42 @@
                     <!-- Form Group -->
                     <div class="row form-group">
                         <label for="organizationLabel" class="col-sm-3 col-form-label input-label">Organization</label>
-
                         <div class="col-sm-9">
-                            <input asp-for="Organization" type="text" required class="form-control" name="organization" id="organizationLabel" placeholder="TMA Solutions" aria-label="Htmlstream">
+                            <div class="input-group input-group-sm-down-break">
+                                <!-- Select2 -->
+                                <select asp-for=Duration class="js-select2-custom custom-select" size="1" style="opacity: 0;"
+                                        data-hs-select2-options='{"minimumResultsForSearch": "Infinity",
+                                                                  "placeholder": "Select one"}'>
+                                    <option label="empty"></option>
+                                    <option value="F">Full time</option>
+                                    <option value="P">Part time</option>
+                                </select>
+                                <!-- End Select2 -->
+                            </div>
                         </div>
                     </div>
                     <!-- End Form Group -->
                     <!-- Form Group -->
                     <div class="row form-group">
                         <label for="departmentLabel" class="col-sm-3 col-form-label input-label">Department</label>
-
                         <div class="col-sm-9">
-                            <input asp-for="Department" type="text" required class="form-control" name="department" id="departmentLabel" placeholder="TIP#Sharp" aria-label="Human resources">
+                            <div class="input-group input-group-sm-down-break">
+                                <!-- Select2 -->
+                                <select asp-for=Department class="js-select2-custom custom-select" size="1" style="opacity: 0;"
+                                        data-hs-select2-options='{"minimumResultsForSearch": "Infinity",
+                                                                  "placeholder": "Select one"}'>
+                                    <option label="empty"></option>
+                                    <option value="F">Full time</option>
+                                    <option value="P">Part time</option>
+                                </select>
+                                <!-- End Select2 -->
+                            </div>
                         </div>
                     </div>
                     <!-- End Form Group -->
                     <!-- Form Group -->
                     <div class="row">
                         <label class="col-sm-3 col-form-label input-label">Intern type</label>
-
                         <div class="col-sm-9">
                             <div class="input-group input-group-sm-down-break">
                                 <!-- Select2 -->

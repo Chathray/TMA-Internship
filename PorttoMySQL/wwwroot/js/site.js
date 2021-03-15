@@ -30,6 +30,21 @@ $(document).on('ready', function () {
 
 
 
+    // INITIALIZATION OF FLATPICKR
+    // =======================================================
+    $('.js-flatpickr').each(function () {
+      $.HSCore.components.HSFlatpickr.init($(this));
+    });
+
+    $.HSCore.components.HSFlatpickr.init($('#js-flatpickr-disabling-dates'), {
+      disable: [
+        function (date) {
+          // return true to disable
+          return (date.getDay() === 0 || date.getDay() === 6);
+        }
+      ],
+    });
+
     // INITIALIZATION OF NAVBAR VERTICAL NAVIGATION
     // =======================================================
     var sidebar = $('.js-navbar-vertical-aside').hsSideNav();
