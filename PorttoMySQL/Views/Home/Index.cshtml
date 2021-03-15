@@ -1,0 +1,264 @@
+﻿@using Microsoft.AspNetCore.Authentication
+@model IndexModel
+@{
+    ViewData["Title"] = "TMA Internship";
+    var typp = "";
+}
+
+<!-- Page Header -->
+<div class="pl-0">
+    <div class="row align-items-end">
+        <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-no-gutter">
+                    <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Index</li>
+                </ol>
+            </nav>
+            <h3 class="page-header-title mb-5">@ViewData["Title"]</h3>
+        </div>
+
+        <div class="col-sm-auto">
+            <button type="button" class="btn btn-sm btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
+                Add intern
+            </button>
+        </div>
+    </div>
+    <!-- End Row -->
+</div>
+<!-- End Page Header -->
+<!-- Table -->
+<div class="table-responsive datatable-custom">
+    <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+           data-hs-datatables-options='{
+                     "columnDefs": [{
+                        "targets": [0, 7],
+                        "orderable": false
+                      }],
+                     "order": [],
+                     "info": {
+                       "totalQty": "#datatableWithPaginationInfoTotalQty"
+                     },
+                     "search": "#datatableSearch",
+                     "entries": "#datatableEntries",
+                     "pageLength": 15,
+                     "isResponsive": true,
+                     "isShowPaging": false,
+                     "pagination": "datatablePagination"
+                   }'>
+        <thead class="thead-light">
+            <tr>
+                <th class="table-column-pr-0">
+                    <div class="custom-control custom-checkbox">
+                        <input id="datatableCheckAll" type="checkbox" class="custom-control-input">
+                        <label class="custom-control-label" for="datatableCheckAll"></label>
+                    </div>
+                </th>
+                <th class="table-column-pl-0">Name</th>
+                <th>Position</th>
+                <th>Phone</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Organization</th>
+                <th>Date Created</th>
+                <th>Created By</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var X in Model.Interns)
+            {
+                <tr>
+                    <td class="table-column-pr-0">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="check-@X.ID">
+                            <label class="custom-control-label" for="check-@X.ID"></label>
+                        </div>
+                    </td>
+                    <td class="table-column-pl-0">
+                        <a class="d-flex align-items-center" href="#">
+                            <div class="avatar avatar-circle">
+                                <img class="avatar-img" src="~/img/img1.jpg" alt="Image Description">
+                            </div>
+                            <div class="ml-3">
+                                <span class="d-block h5 text-hover-primary mb-0">@X.FirstName @X.LastName <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></span>
+                                <span class="d-block font-size-sm text-body">@X.Email</span>
+                            </div>
+                        </a>
+                    </td>
+                    <td>
+                        <span class="d-block h5 mb-0">@X.Department</span>
+                        <span class="d-block font-size-sm">@X.Type</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-soft-info">
+                            <span class="bg-info"></span>@X.Phone
+                        </span>
+                    </td>
+                    <td>
+                        <span>@X.Duration.Substring(0, 10)</span>
+                    </td>
+                    <td>
+                        <span>@X.Duration.Substring(12, 11)</span>
+                    </td>
+                    <td>
+                        <span>@X.Organization</span>
+                    </td>
+                    <td>
+                        <span>@X.CreatedDate</span>
+                    </td>
+                    <td>
+                        <span>@X.CreatedBy</span>
+                    </td>
+                    <td>
+                        <div id="removeInternPopover" data-toggle="popover-dark" data-placement="left" title="Trainees will leave TMA" data-content="Check out this.">
+                            <a class="btn btn-sm btn-white" href="javascript:;" onclick="InternLeave(@X.ID, this)">
+                                <i class="tio-remove-circle-outlined"></i> Leave
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- End Table -->
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="js-validate" asp-controller="Home" asp-action="Index">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create a new intern</h5>
+                    <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+                        <i class="tio-clear tio-lg" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <!-- End Header -->
+                <!-- Body -->
+                <div class="card-body">
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">Avatar</label>
+
+                        <div class="col-sm-9">
+                            <div class="d-flex align-items-center">
+                                <!-- Avatar -->
+                                <label class="avatar avatar-xl avatar-circle avatar-uploader mr-5" for="avatarUploader">
+                                    <img id="avatarImg" class="avatar-img" src="../img/img1.jpg" alt="Image Description">
+
+                                    <input asp-for="Avatar" type="file" class="js-file-attach avatar-uploader-input" id="avatarUploader" data-hs-file-attach-options='{
+                                        "textTarget": "#avatarImg",
+                                        "mode": "image",
+                                        "targetAttr": "src",
+                                        "resetTarget": ".js-file-attach-reset-img",
+                                        "resetImg": "../img/img1.jpg",
+                                        "allowTypes": [".png", ".jpeg", ".jpg"]
+                                     }'>
+
+                                    <span class="avatar-uploader-trigger">
+                                        <i class="tio-edit avatar-uploader-icon shadow-soft"></i>
+                                    </span>
+                                </label>
+                                <!-- End Avatar -->
+
+                                <button type="button" class="js-file-attach-reset-img btn btn-white">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Full name <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Displayed on public forums, such as Front."></i></label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm-down-break">
+                                <input asp-for="FirstName" type="text" required class="form-control" name="firstName" id="firstNameLabel" placeholder="Clarice" aria-label="Clarice">
+                                <input asp-for="LastName" type="text" required class="form-control" name="lastName" id="lastNameLabel" placeholder="Boone" aria-label="Boone">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="emailLabel" class="col-sm-3 col-form-label input-label">Email</label>
+
+                        <div class="col-sm-9">
+                            <input asp-for="Email" type="email" required class="form-control" name="email" id="emailLabel" placeholder="clarice@example.com" aria-label="clarice@example.com">
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="emailLabel" class="col-sm-3 col-form-label input-label">Phone</label>
+                        <div class="col-sm-9">
+                            <input asp-for="Phone" type="text" required class="js-masked-input form-control" placeholder="+84 000 000 000"
+                                   data-hs-mask-options='{
+                                   "template": "+00 000 000 000"
+                                   }' maxlength="16" />
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="emailLabel" class="col-sm-3 col-form-label input-label">Duration</label>
+                        <div class="col-sm-9">
+                            <input asp-for="Duration" type="text" required class="js-masked-input form-control" placeholder="Start Date - End Date"
+                                   data-hs-mask-options='{
+                                   "template": "00/00/0000 - 00/00/0000"
+                                   }'>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="organizationLabel" class="col-sm-3 col-form-label input-label">Organization</label>
+
+                        <div class="col-sm-9">
+                            <input asp-for="Organization" type="text" required class="form-control" name="organization" id="organizationLabel" placeholder="TMA Solutions" aria-label="Htmlstream">
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row form-group">
+                        <label for="departmentLabel" class="col-sm-3 col-form-label input-label">Department</label>
+
+                        <div class="col-sm-9">
+                            <input asp-for="Department" type="text" required class="form-control" name="department" id="departmentLabel" placeholder="TIP#Sharp" aria-label="Human resources">
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                    <!-- Form Group -->
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label input-label">Intern type</label>
+
+                        <div class="col-sm-9">
+                            <div class="input-group input-group-sm-down-break">
+                                <!-- Select2 -->
+                                <select asp-for=Type class="js-select2-custom custom-select" size="1" style="opacity: 0;"
+                                        data-hs-select2-options='{"minimumResultsForSearch": "Infinity",
+                                                                  "placeholder": "Select one"}'>
+                                    <option label="empty"></option>
+                                    <option value="F">Full time</option>
+                                    <option value="P">Part time</option>
+                                </select>
+                                <!-- End Select2 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+                </div>
+                <!-- End Body -->
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <!-- End Footer -->
+            </div>
+        </form>
+    </div>
+</div>
