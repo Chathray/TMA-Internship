@@ -25,14 +25,16 @@ namespace WebApplication
 
             // CR:Add database context of webapp
             services.AddDbContext<DataContext>(options =>
-                        options.UseMySQL(Configuration.GetConnectionString("MYSQL")));
+                options.UseMySQL(Configuration.GetConnectionString("MYSQL")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/Authentication";
-                    options.AccessDeniedPath = "/Home/Error";
-                });
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Authentication";
+                options.AccessDeniedPath = "/Home/Error";
+            });
+            
+            services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureMyCookie>();
         }
 
 
